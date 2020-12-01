@@ -1,3 +1,7 @@
+#######################################
+### Script con estimación principal ###
+#######################################
+
 # Bibliotecas generales de R
 library(tidyverse)   # Conjunto de paquetes (contiene dplyr y ggplot2)
 library(readxl)      # Importar bases de datos tipo excel
@@ -97,14 +101,23 @@ plot_mccrary_30.56 = rdplotdensity(test_30.56, general$puntaje_sisben_3)
 
 #---- estimación de variables de control (validación de continuidad de los controles) ----
 
-# Sexo 
-sexo_reg = rdrobust(general$sexo, general$puntaje_sisben_3,
-                                           c = 30.56, kernel = "uniform", vce = "hc0", p = 1, h = 1)
-summary(asistencia_centro_educativo_reg)
+# Sexo (No hay discontinuidad, se cumple el supuesto)
+
+sexo_reg = rdrobust(general$sexo, general$puntaje_sisben_3, c = 30.56,
+                   kernel = "uniform", vce = "hc0", p = 1, h = 1); summary(sexo_reg)
+
+sexo_graph = rdplot(general$sexo, general$puntaje_sisben_3,  
+                    c = 30.56, kernel = "uniform", h = 3, p = 1,
+                    support = c(28,35), x.lim = c(27, 34))
 
 #---- gráficos de variables de control (validación del supuesto de identificación) ----
 
+sexo_reg = rdrobust(general$sexo, general$puntaje_sisben_3, c = 30.56,
+                    kernel = "uniform", vce = "hc0", p = 1, h = 1); summary(sexo_reg)
 
+sexo_graph = rdplot(general$sexo, general$puntaje_sisben_3,  
+                    c = 30.56, kernel = "uniform", h = 3, p = 1,
+                    support = c(28,35), x.lim = c(27, 34))
 
 #---- gráficos de variables de control (validación del supuesto de identificación) ----
 
