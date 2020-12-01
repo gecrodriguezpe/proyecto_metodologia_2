@@ -43,3 +43,61 @@ setwd("~/Documents/GitHub/semestre5_git/proyecto_metodologia_2/trabajo_empirico/
 ### per001: Sexo, 0: Mujer, 1: Hombre
 ### per010: Embarazada, 0: No, 1: Sí
 ### per016: Percibe ingresos: 0: No, 1: Sí
+
+#---- Estimaciones adicionales ----
+
+# Base de datos grupo 1
+g1 =  sisben3 %>% 
+  relocate(llave, hogar, orden, fex, .before = depto) %>% 
+  relocate(zona, .before = area) %>% 
+  relocate(corte, .before = puntaje_sisben_3) %>% 
+  filter(per002 == 2) %>% 
+  mutate(per011 = ifelse(per011 == 2, 0, 1),
+         per001 = ifelse(per001 == 2, 0, 1),
+         per008 = ifelse(per008 == 2, 0, 1),
+         per010 = ifelse(per010 == 2, 0, 1),
+         per016 = ifelse(per016 == 2, 0, 1)
+  ) 
+
+# Base de datos grupo 2
+g2 =  sisben3 %>% 
+  relocate(llave, hogar, orden, fex, .before = depto) %>% 
+  relocate(zona, .before = area) %>% 
+  relocate(corte, .before = puntaje_sisben_3) %>% 
+  filter(per002 == 3) %>% 
+  mutate(per011 = ifelse(per011 == 2, 0, 1),
+         per001 = ifelse(per001 == 2, 0, 1),
+         per008 = ifelse(per008 == 2, 0, 1),
+         per010 = ifelse(per010 == 2, 0, 1),
+         per016 = ifelse(per016 == 2, 0, 1)
+  ) 
+
+# Base de datos sin bogota
+sin_bogota = sisben3 %>% 
+  relocate(llave, hogar, orden, fex, .before = depto) %>% 
+  relocate(zona, .before = area) %>% 
+  relocate(corte, .before = puntaje_sisben_3) %>% 
+  filter(per002 == 2 | per002 == 3) %>% 
+  filter(! depto == 11) %>% 
+  mutate(per011 = ifelse(per011 == 2, 0, 1),
+         per001 = ifelse(per001 == 2, 0, 1),
+         per008 = ifelse(per008 == 2, 0, 1),
+         per010 = ifelse(per010 == 2, 0, 1),
+         per016 = ifelse(per016 == 2, 0, 1)
+  )
+
+
+# Base de datos solo antioquia
+antioquia = sisben3 %>% 
+  relocate(llave, hogar, orden, fex, .before = depto) %>% 
+  relocate(zona, .before = area) %>% 
+  relocate(corte, .before = puntaje_sisben_3) %>% 
+  filter(per002 == 2 | per002 == 3) %>% 
+  filter(! depto == 11) %>% 
+  mutate(per011 = ifelse(per011 == 2, 0, 1),
+         per001 = ifelse(per001 == 2, 0, 1),
+         per008 = ifelse(per008 == 2, 0, 1),
+         per010 = ifelse(per010 == 2, 0, 1),
+         per016 = ifelse(per016 == 2, 0, 1)
+  )
+
