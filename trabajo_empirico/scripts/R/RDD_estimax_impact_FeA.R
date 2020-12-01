@@ -110,6 +110,8 @@ sexo_graph = rdplot(general$sexo, general$puntaje_sisben_3,
                     c = 30.56, kernel = "uniform", h = 3, p = 1,
                     support = c(28,35), x.lim = c(27, 34))
 
+mean_sex = mean(general$sexo)
+
 #---- gráficos de variables de control (validación del supuesto de identificación) ----
 
 embarada_reg = rdrobust(general$embarazada, general$puntaje_sisben_3, c = 30.56,
@@ -118,6 +120,8 @@ embarada_reg = rdrobust(general$embarazada, general$puntaje_sisben_3, c = 30.56,
 embarazada_graph = rdplot(general$embarazada, general$puntaje_sisben_3,  
                     c = 30.56, kernel = "uniform", h = 3, p = 1,
                     support = c(28,35), x.lim = c(27, 34), y.lim = c(-0.1, 0.1))
+
+mean_embaraz = mean(general$embarazada)
 
 #---- gráficos de variables de control (validación del supuesto de identificación) ----
 
@@ -128,12 +132,16 @@ percibe_ing_graph = rdplot(general$percibe_ing, general$puntaje_sisben_3,
                           c = 30.56, kernel = "uniform", h = 3, p = 1,
                           support = c(28,35), x.lim = c(27, 34), y.lim = c(-0.2, 0.3))
 
+mean_percibe_ing = mean(general$percibe_ing)
+
 #---- Estimaciones de interés ----
 
 ## Se especifica una matriz de covariadas: sexo, embarazada
 covs = cbind.data.frame(general$sexo, general$embarazada, general$percibe_ing)
 
 #---- Estimación sin controles ----
+
+mean_ult_mes = mean(general$estudio_ult_mes)
 
 ### estudio en el último mes vs puntaje del sisben (sin covariadas)
 estudio_ult_mes_reg = rdrobust(general$estudio_ult_mes, general$puntaje_sisben_3, c = 30.56, 
@@ -147,7 +155,7 @@ estudio_ult_mes_reg_covs = rdrobust(general$estudio_ult_mes, general$puntaje_sis
 
 #---- gráfica estimación principal ----
 
-### gráfica asistencia centro educativo vs puntaje del sisben (sin intervalos de confianza)
+### gráfica asistencia centro educativo ultimo mes vs puntaje del sisben (sin intervalos de confianza)
 main_reg_plot_not_interval = rdplot(general$estudio_ult_mes, general$puntaje_sisben_3,  
                                       c = 30.56, kernel = "uniform", h = 3, p = 1,
                                       support = c(28,35), x.lim = c(26,35), y.lim = c(0.8, 0.88))
@@ -158,3 +166,47 @@ main_reg_plot_with_interval = rdplot(general$estudio_ult_mes, general$puntaje_si
                                       c = 30.56, kernel = "uniform", h = 3, p = 1,
                                       support = c(28,35), x.lim = c(26,35), y.lim = c(0.8, 0.9), 
                                      ci = 95)
+
+#---- Calculo del pvalor del de estudio como principal actividad último mes usando inferencia randomizada ----
+
+random_inf_treshold = rdrandinf(general$estudio_ult_mes, general$puntaje_sisben_3, cutoff = 30.56, 
+                                statistic = "diffmeans", p = 1, kernel = "uniform", 
+                                reps = 4000, seed = 1234); summary(random_inf_treshold)
+
+#---- Experimentos placebo ----
+
+####
+## Experimento placebo1 en cutoff=10, con ancho de banda h=1  
+####
+
+### Parámetros para el placebo1
+placebo_cutoff1 = 15
+bandwidth_placebo1 = 1
+
+### Gráfica placebo1 sin intervalos de confianza
+placebo1_plot = rdplot(general$estudio_ult_mes, general$puntaje_sisben_3,  
+                         c = placebo_cutoff1, kernel = "uniform", h = 3, p = 1, y.lim = c(0.55, 0.85),
+                         x.lim = c(2.5, 25))
+
+### Estimando el modelo en el placebo1 
+placebo1_reg = rdrobust(general$estudio_ult_mes, general$puntaje_sisben_3, c = placebo_cutoff1, 
+                        kernel = "uniform", vce = "hc0", p = 1, 
+                        h = bandwidth_placebo1); summary(placebo1_reg) # El efecto no es significativo
+
+####
+## Experimento placebo2 en cutoff=65, con ancho de banda h=1  
+####
+
+### Parámetros para el placebo2
+placebo_cutoff2 = 45
+bandwidth_placebo2 = 1
+
+### Gráfica placebo1 sin intervalos de confianza
+placebo2_plot = rdplot(general$estudio_ult_mes, general$puntaje_sisben_3,  
+                       c = placebo_cutoff2, kernel = "uniform", h = 3, p = 1, x.lim = c(43, 47),
+                       y.lim = c(0.5, 1))
+
+### Estimando el modelo en el placebo1 
+placebo2_reg = rdrobust(general$estudio_ult_mes, general$puntaje_sisben_3, c = placebo_cutoff2, 
+                        kernel = "uniform", vce = "hc0", p = 1, 
+                        h = bandwidth_placebo2); summary(placebo2_reg) # El efecto no es significativo
