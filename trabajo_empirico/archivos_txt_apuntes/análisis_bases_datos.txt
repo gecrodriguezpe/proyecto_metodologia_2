@@ -1,0 +1,22 @@
+(Nota: El orden importa - izqueirda a derecha de mayor a menor impacto)
+
+- Pobreza y evaluación de impacto: (Scopus: poverty + impact evualuatio*)
+	Keywords: cash transfers, impact evaluation y poverty
+	authors: handa s, davis b, devereux s
+	relevants sources: world development, social science and medicine 
+	
+- Conditional cash transfer: (Scopus: conditional cash transfers)	
+	Keywords: conditional cash transfers, cash transfers, mexico, latin america, education
+	authors: attanasio, maluccio, behrman jr, zler b., bradshaw, reininger t
+	relevants sources: world development, journal of development economics, journal of development studies
+	
+- Multidimensional poverty: (Scopus: multidimensional poverty)		
+	Keywords: multidimensional poverty, child poverty, income poverty 
+	authors: Alkire, Whelan, Matre
+	relevant sources: social indicator research, world development, journal of economic inequality 
+	
+- Income poverty: (Scopus: income poverty + latin america)
+	Keywords: poverty, latin america, inequality
+	authors: Berdegu, Gasparini, Lustig, Barrientos
+	relevant sources: world development, review of income and wealth, social science and medicine
+
