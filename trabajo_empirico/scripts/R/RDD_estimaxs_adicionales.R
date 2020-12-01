@@ -1,6 +1,6 @@
-###########################################
+####
 ### Script con estimaciones adicionales ###
-###########################################
+####
 
 # Bibliotecas generales de R
 library(tidyverse)   # Conjunto de paquetes (contiene dplyr y ggplot2)

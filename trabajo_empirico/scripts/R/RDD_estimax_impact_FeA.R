@@ -1,6 +1,6 @@
-#######################################
+####
 ### Script con estimación principal ###
-#######################################
+####
 
 # Bibliotecas generales de R
 library(tidyverse)   # Conjunto de paquetes (contiene dplyr y ggplot2)
@@ -32,7 +32,7 @@ setwd("~/Documents/GitHub/semestre5_git/proyecto_metodologia_2/trabajo_empirico/
 ####
 
 # Outcome: 
-### per014: Actividad en el último mes (que se reescribio para que quedará estudio o no el último mes)
+### estudio_ult_mes: Actividad en el último mes (que se reescribio para que quedará estudio o no el último mes)
 ### Variable binaria: 0: el último mes no estudio, 1: el último mes estudio
 ### Tiene sentido en la medida que los grupos considerados tienen edades entre 6 a 17 años de edad
 
@@ -40,9 +40,9 @@ setwd("~/Documents/GitHub/semestre5_git/proyecto_metodologia_2/trabajo_empirico/
 ### puntaje_sisben_3: variable continua
 
 # Controles: 
-### per001: Sexo, 0: Mujer, 1: Hombre
-### per010: Embarazada, 0: No, 1: Sí
-### per016: Percibe ingresos: 0: No, 1: Sí
+### sexo: Sexo, 0: Mujer, 1: Hombre
+### embarazada: Embarazada, 0: No, 1: Sí
+### percibe_ing: Percibe ingresos: 0: No, 1: Sí
 
 #---- Base de Datos para estimación principal ----
 sisben3 = read_dta("Sisben_III_PERS_DIC2016.dta")
@@ -112,50 +112,49 @@ sexo_graph = rdplot(general$sexo, general$puntaje_sisben_3,
 
 #---- gráficos de variables de control (validación del supuesto de identificación) ----
 
-sexo_reg = rdrobust(general$sexo, general$puntaje_sisben_3, c = 30.56,
-                    kernel = "uniform", vce = "hc0", p = 1, h = 1); summary(sexo_reg)
+embarada_reg = rdrobust(general$embarazada, general$puntaje_sisben_3, c = 30.56,
+                    kernel = "uniform", vce = "hc0", p = 1, h = 1); summary(embarada_reg)
 
-sexo_graph = rdplot(general$sexo, general$puntaje_sisben_3,  
+embarazada_graph = rdplot(general$embarazada, general$puntaje_sisben_3,  
                     c = 30.56, kernel = "uniform", h = 3, p = 1,
-                    support = c(28,35), x.lim = c(27, 34))
+                    support = c(28,35), x.lim = c(27, 34), y.lim = c(-0.1, 0.1))
 
 #---- gráficos de variables de control (validación del supuesto de identificación) ----
 
+percibe_ing_reg = rdrobust(general$percibe_ing, general$puntaje_sisben_3, c = 30.56,
+                           kernel = "uniform", vce = "hc0", p = 1, h = 1); summary(percibe_ing_reg)
 
+percibe_ing_graph = rdplot(general$percibe_ing, general$puntaje_sisben_3,  
+                          c = 30.56, kernel = "uniform", h = 3, p = 1,
+                          support = c(28,35), x.lim = c(27, 34), y.lim = c(-0.2, 0.3))
 
 #---- Estimaciones de interés ----
 
-## Se especifica una matriz de covariadas. 
-covs = cbind.data.frame(general$per001, general$per010, general$per016)
-
-#covs = cbind.data.frame(per001, per008)
-# covs = cbind.data.frame(sisben3$per001, sisben3$per010, sisben3$per016)
+## Se especifica una matriz de covariadas: sexo, embarazada
+covs = cbind.data.frame(general$sexo, general$embarazada, general$percibe_ing)
 
 #---- Estimación sin controles ----
 
-### asistencia centro educativo vs puntaje del sisben (sin covariadas)
-asistencia_centro_educativo_reg = rdrobust(general$per014, general$puntaje_sisben_3,
-                                           c = 30.56, kernel = "uniform", vce = "hc0", p = 1, h = 1)
-summary(asistencia_centro_educativo_reg)
+### estudio en el último mes vs puntaje del sisben (sin covariadas)
+estudio_ult_mes_reg = rdrobust(general$estudio_ult_mes, general$puntaje_sisben_3, c = 30.56, 
+                               kernel = "uniform", vce = "hc0", p = 1, h = 1); summary(asistencia_centro_educativo_reg)
 
 #---- Estimación con controles ----
 
 ### asistencia centro educativo vs puntaje del sisben (con covariadas)
-asistencia_centro_educativo_reg_covs = rdrobust(general$per014, general$puntaje_sisben_3,
-                                           c = 30.56, kernel = "uniform", vce = "hc0", p = 1, h = 1,
-                                           covs = covs)
-summary(asistencia_centro_educativo_reg_covs)
+estudio_ult_mes_reg_covs = rdrobust(general$estudio_ult_mes, general$puntaje_sisben_3, c = 30.56,
+                                    kernel = "uniform", vce = "hc0", p = 1, h = 1, covs = covs); summary(asistencia_centro_educativo_reg_covs)
 
 #---- gráfica estimación principal ----
 
 ### gráfica asistencia centro educativo vs puntaje del sisben (sin intervalos de confianza)
-main_reg_plot_not_interval = rdplot(general$per014, general$puntaje_sisben_3,  
+main_reg_plot_not_interval = rdplot(general$estudio_ult_mes, general$puntaje_sisben_3,  
                                       c = 30.56, kernel = "uniform", h = 3, p = 1,
                                       support = c(28,35), x.lim = c(26,35), y.lim = c(0.8, 0.88))
 
 
 ### gráfica asistencia centro educativo vs puntaje del sisben (con intervalos de confianza)
-main_reg_plot_with_interval = rdplot(general$per014, general$puntaje_sisben_3,  
+main_reg_plot_with_interval = rdplot(general$estudio_ult_mes, general$puntaje_sisben_3,  
                                       c = 30.56, kernel = "uniform", h = 3, p = 1,
                                       support = c(28,35), x.lim = c(26,35), y.lim = c(0.8, 0.9), 
                                      ci = 95)
