@@ -52,7 +52,7 @@ general = sisben3 %>%
   relocate(llave, hogar, orden, fex, .before = depto) %>% 
   relocate(zona, .before = area) %>% 
   relocate(corte, .before = puntaje_sisben_3) %>% 
-  filter(per002 == 2 | per002 == 3) %>% 
+  filter(per002 == 2 | per002 == 3) %>%                 # per002: Edad: 2: 6 a 11 años, 3: 12 a 17 años 
   mutate(asiste_centro_educativo = ifelse(per011 == 2, 0, 1),
          sexo = ifelse(per001 == 2, 0, 1),
          paga_alimentax = ifelse(per008 == 2, 0, 1),
