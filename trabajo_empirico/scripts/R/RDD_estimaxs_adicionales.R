@@ -131,6 +131,8 @@ estudio_ult_mes_g1_reg = rdrobust(g1$estudio_ult_mes, g1$puntaje_sisben_3, c = 3
 estudio_ult_mes_reg_g1_covs = rdrobust(g1$estudio_ult_mes, g1$puntaje_sisben_3, c = 30.56,
                                     kernel = "uniform", vce = "hc0", p = 1, h = 1, covs = covs); summary(estudio_ult_mes_reg_g1_covs)
 
+### gráfica de la estimación para el grupo g1
+
 main_reg_plot_not_interval_g1 = rdplot(g1$estudio_ult_mes, g1$puntaje_sisben_3,  
                                     c = 30.56, kernel = "uniform", h = 3, p = 1,
                                     support = c(28,35), x.lim = c(26,35), y.lim = c(0.8, 1))
@@ -156,8 +158,8 @@ histogram_puntaje_sisben = g2 %>%
   ggtitle("Histograma para el Puntaje del sisbén")
 
 histogram_puntaje_sisben
-
 ## Test de McCrary (No manipulación)
+
 
 ### Para el valor de umbral puntaje del sisbén = 30.56
 test_30.56 = rddensity(g2$puntaje_sisben_3, c = 30.56, vce = "plugin")
@@ -197,6 +199,8 @@ estudio_ult_mes_g2_reg = rdrobust(g2$estudio_ult_mes, g2$puntaje_sisben_3, c = 3
 
 estudio_ult_mes_reg_g2_covs = rdrobust(g2$estudio_ult_mes, g2$puntaje_sisben_3, c = 30.56,
                                        kernel = "uniform", vce = "hc0", p = 1, h = 1, covs = covs); summary(estudio_ult_mes_reg_g2_covs)
+
+### gráfica de la estimación para el grupo g1
 
 main_reg_plot_not_interval_g2 = rdplot(g2$estudio_ult_mes, g2$puntaje_sisben_3,  
                                        c = 30.56, kernel = "uniform", h = 3, p = 1,
