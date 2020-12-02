@@ -77,6 +77,27 @@ g1 =  general %>%
 
 # validación de supuestos:
 
+##  Histograma (no manipulación) 
+
+histogram_puntaje_sisben = g1 %>% 
+  ggplot(aes(x = puntaje_sisben_3)) +
+  geom_histogram(bins = 52) +
+  geom_vline(xintercept = 30.56, color = "red") + 
+  theme_light() +
+  xlab("Puntaje del Sisbén ") + 
+  ylab("Frequency") +
+  ggtitle("Histograma para el Puntaje del sisbén")
+
+histogram_puntaje_sisben
+
+## Test de McCrary (No manipulación)
+
+### Para el valor de umbral puntaje del sisbén = 30.56
+test_30.56 = rddensity(g1$puntaje_sisben_3, c = 30.56, vce = "plugin")
+summary(test_30.56)
+
+plot_mccrary_30.56 = rdplotdensity(test_30.56, g1$puntaje_sisben_3)
+
 ## sexo
 sexo_g1_reg = rdrobust(g1$sexo, g1$puntaje_sisben_3, c = 30.56,
                        kernel = "uniform", vce = "hc0", p = 1, h = 1); summary(sexo_g1_reg)
@@ -122,6 +143,27 @@ g2 =  general %>%
   filter(per002 == 3)
 
 # validación de supuestos:
+
+##  Histograma (no manipulación) 
+
+histogram_puntaje_sisben = g2 %>% 
+  ggplot(aes(x = puntaje_sisben_3)) +
+  geom_histogram(bins = 50) +
+  geom_vline(xintercept = 30.56, color = "red") + 
+  theme_light() +
+  xlab("Puntaje del Sisbén ") + 
+  ylab("Frequency") +
+  ggtitle("Histograma para el Puntaje del sisbén")
+
+histogram_puntaje_sisben
+
+## Test de McCrary (No manipulación)
+
+### Para el valor de umbral puntaje del sisbén = 30.56
+test_30.56 = rddensity(g2$puntaje_sisben_3, c = 30.56, vce = "plugin")
+summary(test_30.56)
+
+plot_mccrary_30.56 = rdplotdensity(test_30.56, g2$puntaje_sisben_3)
 
 ## sexo
 sexo_g2_reg = rdrobust(g2$sexo, g2$puntaje_sisben_3, c = 30.56,
