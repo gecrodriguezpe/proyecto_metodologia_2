@@ -136,7 +136,7 @@ mean_percibe_ing = mean(general$percibe_ing)
 
 #---- Estimaciones de interés ----
 
-## Se especifica una matriz de covariadas: sexo, embarazada
+## Se especifica una matriz de covariadas: sexo, embarazada, percibe ingreso
 covs = cbind.data.frame(general$sexo, general$embarazada, general$percibe_ing)
 
 #---- Estimación sin controles ----
@@ -145,13 +145,13 @@ mean_ult_mes = mean(general$estudio_ult_mes)
 
 ### estudio en el último mes vs puntaje del sisben (sin covariadas)
 estudio_ult_mes_reg = rdrobust(general$estudio_ult_mes, general$puntaje_sisben_3, c = 30.56, 
-                               kernel = "uniform", vce = "hc0", p = 1, h = 1); summary(asistencia_centro_educativo_reg)
+                               kernel = "uniform", vce = "hc0", p = 1, h = 1); summary(estudio_ult_mes_reg)
 
 #---- Estimación con controles ----
 
 ### asistencia centro educativo vs puntaje del sisben (con covariadas)
 estudio_ult_mes_reg_covs = rdrobust(general$estudio_ult_mes, general$puntaje_sisben_3, c = 30.56,
-                                    kernel = "uniform", vce = "hc0", p = 1, h = 1, covs = covs); summary(asistencia_centro_educativo_reg_covs)
+                                    kernel = "uniform", vce = "hc0", p = 1, h = 1, covs = covs); summary(estudio_ult_mes_reg_covs)
 
 #---- gráfica estimación principal ----
 
