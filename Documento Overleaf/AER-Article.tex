@@ -40,7 +40,7 @@
 
 \begin{document}
 
-\title{Transferencias condicionadas en Colombia: ¿Cómo la asignación por puntaje del Sisbén a Familias en Acción afecta la accesibilidad a la educación?\footnote{El lector interesado podrá reproducir la totalidad del artículo utilizando las bases de datos y scripts realizados en R en el siguiente enlace: https://github.com/gecrodriguezpe/proyecto_metodologia_2.git}}
+\title{Transferencias condicionadas en Colombia: ¿Cómo la asignación por puntaje del Sisbén a Familias en Acción afecta la accesibilidad a la educación?\footnote{El lector interesado podrá reproducir la totalidad del artículo utilizando las bases de datos y scripts realizados en R en el siguiente enlace: https://github.com/gecrodriguezpe/proyecto\_metodologia\_2.git}}
 \shortTitle{Rodríguez, López y Pérez: Revisión de literatura}
 \author{Germán Rodríguez, Juliana López and Raúl Pérez\thanks{Rodríguez: Universidad Nacional de Colombia (email gecrodriguezpe@unal.edu.co); López: Universidad Nacional de Colombia (email jvlopezne@unal.edu.co); Pérez: Universidad Nacional de Colombia (email rhperezp@unal.edu.co).}}
 \date{\today}
@@ -281,7 +281,7 @@ Media                   & 0.78                                                  
 Controles               & No                                                                 & Sí                                                                  \\
 Número de observaciones & 22286                                                              & 22286   \\ \hline                                                           
 \end{tabular}
-\caption{Esta tabla contiene las regresiones lineales locales discontinuas usando la variable $EUM$ como variable dependiente en función del puntaje del sisbén. Como se observa, en el umbral $30.56$ el efecto del salto es significativo, por lo que existe una discontinuidad alrededor del umbral causada por encontrarse por encima o debajo del umbral. Para la estimación con controlos, los controles empleados fueron las covariadas: \textit{sexo}, \textit{embarazada} y \textit{percibe ingresos}.En paréntesis se encuentran los valores de los p-valores. ** denota significancia del 5 \%}
+\caption{Esta tabla contiene las regresiones lineales locales discontinuas usando la variable $EUM$ como variable dependiente en función del puntaje del sisbén. Como se observa, en el umbral $30.56$ el efecto del salto es significativo, por lo que existe una discontinuidad alrededor del umbral causada por encontrarse por encima o debajo del umbral. Para la estimación con controlos, los controles empleados fueron las covariadas: \textit{sexo}, \textit{embarazada} y \textit{percibe ingresos}.En paréntesis se encuentran los valores de los p-valores. Adicionalmente, se utilizó un tipo de \textit{bootstrapping} para el cálculo de los errores robustos utilizados en el cálculo de los p-valores.** denota significancia del 5 \%}
 \label{tab:estimaxs_principales}
 \end{table}
 
@@ -331,10 +331,40 @@ Para verificar que en realidad si se encontró un impacto causal significativo s
 
 \subsubsection{Expermientos placebo}
 
-Otro análisis de robustes, ahora para evaluar la calidad de la metodología empleada, fue recrear la metodología empleada para la identificación del impacto causal de la regresión principal pero utilizando umbrales de puntaje del Sisbén arbitarios de tal forma de saber si los resultados también eran o no eran significativos en estos umbrales placebo. 
+Otro análisis de robustes, ahora para evaluar la calidad de la metodología empleada, fue recrear dicha metodología para la identificación del impacto causal de la regresión principal \ref{eq:reduced_form} pero utilizando umbrales de puntaje del Sisbén arbitarios de tal forma de saber si los resultados también eran o no eran significativos en estos umbrales placebo. 
 
+En el primer experimento placebo, se escoge un umbral de puntaje de sisbén igual a $15$ y se realiza un \textit{diseño de regresión lineal local discontinuo} para la ecuación \ref{eq:reduced_form} usando un kernel uniformo y un ancho de banda igual a 1 mientras que en el segundo experimento placebo se escoge un umbral de puntaje de sisbén igual a $45$ utilizando la misma metodología\footnote{Ambas estimaciones se realizan sin covariadas adicionales}.
 
+\begin{table}[h]
+\begin{tabular}{lcc}
+\hline
+\hline
+\multicolumn{1}{c}{}    & \multicolumn{2}{c}{Estimaciones con toda la muestra}                                                                                                                        \\ \cline{2-3} 
+Características         & \begin{tabular}[c]{@{}c@{}}Estudio el útimo mes\\ (umbral placebo = 15)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Estudio el útimo mes\\ (umbral placebo = 45)\end{tabular} \\ \hline
+Impacto                 & \begin{tabular}[c]{@{}c@{}}-0.064\\ (0.529)\end{tabular}                             & \begin{tabular}[c]{@{}c@{}}0.028\\ (0.762)\end{tabular}                              \\
+Media                   & 0.78                                                                                 & 0.78                                                                                 \\
+Controles               & No                                                                                   & Sí                                                                                   \\
+Número de observaciones & 22286                                                                                & 22286                                                                                \\ \hline
+\end{tabular}
+\caption{Esta tabla contiene las regresiones lineales locales discontinuas usando la variable $EUM$ como variable dependiente en función del puntaje del sisbén. Como se observa, en los umbrales placebo $15$ y $45$ el efecto del salto no es significativo, por lo que no existe una discontinuidad alrededor del umbral causada por encontrarse por encima o debajo de los umbrales placebo. Lo anterior, da mayor confianza y robustes a los resultados obtenidos mediante la metodología utilizada para encontrar un efecto significativo en el umbral real.En paréntesis se encuentran los valores de los p-valores. Adicionalmente, se utilizó un tipo de \textit{bootstrapping} para el cálculo de los errores robustos utilizados en el cálculo de los p-valores.** denota significancia del 5 \%}
+\label{tab:placebo}
+\end{table}
 
+Como muestra la tabla de resultados \ref{tab:placebo}, claramente los impactos no son significativos cuándo se introducen umbrales placebos arbitrarios lo que da mayor robustez al procedimiento empleado para la identificación del impacto causal \ref{eq:impacto}. Adicionalmente, las gráficas \ref{fig:placebo1} y \ref{fig:placebo2} muestran que hay continuidad alrededor de los umbrales placebos escogidos arbitrariamente lo que reafirma los resultados de la tabla \ref{tab:placebo}.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.35]{imagenes/estimax_principal/placebo1_main.png}
+    \caption{Caption}
+    \label{fig:placebo1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.35]{imagenes/estimax_principal/placebo2_main.png}
+    \caption{Caption}
+    \label{fig:placebo2}
+\end{figure}
 
 \subsection{Validación de supuestos para las regresiones auxiliares}
 
