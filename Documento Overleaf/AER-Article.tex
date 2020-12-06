@@ -18,9 +18,13 @@
 
 % Margins
 \usepackage[left=2.54cm,right=2.54cm,top=2.54cm,bottom=2.54cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
 
 % Uncomment the next line to use the natbib package with bibtex 
-\usepackage{natbib}
+\usepackage[spanish]{babel}
+\usepackage[natbibapa]{apacite}
+\bibliographystyle{apacite}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \bibliographystyle{aea}
 
@@ -36,7 +40,7 @@
 
 \begin{document}
 
-\title{Revisión de Literatura: Evaluación del programa Familias en Acción}
+\title{Transferencias condicionadas en Colombia: ¿Cómo la asignación por puntaje del Sisbén a Familias en Acción afecta la accesibilidad a la educación?\footnote{El lector interesado podrá reproducir la totalidad del artículo utilizando las bases de datos y scripts realizados en R en el siguiente enlace: https://github.com/gecrodriguezpe/proyecto_metodologia_2.git}}
 \shortTitle{Rodríguez, López y Pérez: Revisión de literatura}
 \author{Germán Rodríguez, Juliana López and Raúl Pérez\thanks{Rodríguez: Universidad Nacional de Colombia (email gecrodriguezpe@unal.edu.co); López: Universidad Nacional de Colombia (email jvlopezne@unal.edu.co); Pérez: Universidad Nacional de Colombia (email rhperezp@unal.edu.co).}}
 \date{\today}
@@ -48,37 +52,299 @@
 \Keywords{educación, transferencias monetarias condicionadas, evaluación de impacto, familias en acción}
 
 \begin{abstract}
-Aquí colocamos el Abstract
+El presente texto tiene como fin estimar el impacto que tiene el programa Familias en Acción en que los niños y jóvenes entre los 6 y 17 años de edad asistan a un centro de educación media.sobre la educación. Para ello, se realizara una  evaluación de impacto estimando un Fuzzy RDD empleando la base de datos del SISBEN II. Al final del análisis se encontró que efectivamente el programa de estudio (Familias en Acción) tuvo un impacto positivo en la asistencia escolar en el rango de edad anteriormente mencionado.
 \end{abstract}
+
 
 \maketitle
 
 % Raul y Juliana
 \section{Introducción}
+    
+Tal como afirma de Walque et al. (2017), la pobreza tiene efectos significativos, perjudiciales y de largo alcance  en  el  desarrollo  infantil.   Es  por  esto que  a  lo  largo  de  la  historia  se  han  creado  programas  de transferencias de efectivo con el fin de apoyar el desarrollo infantil y adolecente. En su desarrollo histórico los programas pioneros de TMC empezaron principalmente en México y en Brasil en el año 1997, posteriormente las TMC se han extendido a países de América Latina y más allá.
+    
+Según Sugiyama (2011) el fundamento económico de los programas de transferencias condicionadas (CT) es que pueden ser una forma equitativa y eficiente de abordar las fallas del mercado y llegar a las poblaciones más vulnerables (Fiszbein et al., 2009). Así bien, como se sabe en la literatura, los programas de transferencias monetarias condicionadas están enfocados principalmente a que los estudiantes cumplan un requisito mínimo de asistencia a un programa escolar. No  obstante,  existen  otros  programas  de  transferencias  monetarias  condicionadas mucho  más amplios, que no solo tiene como exigencia asistir regularmente a un programa educativo si no también a cumplir cierta asistencia en chequeos de salud, entre otros.
 
-Modificación desde el repositorio local (última creo)
+ Este tipo de intervenciones estatales que se centran en invertir en las necesidades básicas de capital humano pueden ejercer un efecto dominó a más largo plazo en el desarrollo de los niños (Ozer et al 2009). Por otra parte, los programas de transferencias condicionadas son efectivos para aumentar la matrícula y la asistencia escolar, sin embargo estos efectos ayudaron a su vez a la disminución de embarazos adolescentes pues ayudaba a evitar la actividad sexual (Baird et al. 2010)
+     
+En Colombia, el Programa Familias en Acción (FA) se diseñó y puso en marcha como una respuesta a los efectos de la crisis económica de finales de los años 1990, con el propósito de proteger y promover la formación de capital humano en las familias en extrema pobreza, a través del otorgamiento de subsidios condicionados a la asistencia escolar y al desarrollo de acciones de cuidado de la salud y la nutrición en poblaciones menores de 18 años pertenecientes a los hogares del nivel 1 del Sisben (Acción Social; DNP, 2016). Según datos del DNP (2016) el Programa ha demostrado tener un impacto importante en el cuidado de la salud, el consumo alimenticio, el crecimiento y desarrollo y el estado nutricional de los niños menores de 5 años en las zonas rurales; así como en el aumento de la asistencia escolar de los jóvenes entre los 12 y años de las zonas urbanas, convirtiéndose en un elemento importante en la estrategia de protección social.
+     
+El programa de Familias en Acción  se ha convertido no solo en uno de los programas sociales más evaluados en la historia reciente de Colombia, sino también uno de los cuáles más gasto público ha recibido. Además, el programa ha logrado beneficiar a un promedio de más de 1.600.000 familias anualmente, desde el 2001 hasta el 2017 (Robles and Urrutia, 2018).
+    
+Según el Banco Interamericano de Desarrollo – BID – (2015) los programas de transferencias monetarias condicionadas son usadas como políticas efectivas en la reducción de la pobreza y el aumento de la calidad educativa de la población de bajos recursos, en especial en los países en vía de desarrollo. Es por esto y las demás ideas planteadas que se decide en este texto realizar una investigación que tenga como objetivo evaluar el impacto real del programa Familias en acción en el acceso a la educación escolar en el rango de 6-17 años entre el 2011 y el 2016.
+
+Para ello el presente articulo se divididera en seis secciones:en la primera se resumirá la literatura relacionada con los programas de transferencia condicionadas, más específicamente los relacionados con el programa de Familia en Acción; segundo se presentara la intervención y el contexto que dan sentido al objetivo del trabajo; tercero hablaremos de los datos, tanto del origen como de la transformaciones hechas a la base de datos; cuarto, se presentara la metodología; quinto se hablaran de los principales resultados; sexto, se concluirá.
+      
 
 % Raul y Juliana
 \section{Estado del arte}
 
+En su desarrollo histórico los programas pioneros de TMC empezaron principalmente en México y en Brasil en el año 1997, posteriormente las TMC se han extendido a países de América Latina y más allá, según \cite{Sugiyama2011TheAmericas}. El programa pionero Progresa en México empezó con aproximadamente 30.000 familias y hoy cubre a 5 millones de familias. Según \cite{Schultz2004SchoolProgram} este es un programa que evalúa el impacto del programa en la matrícula de los niños más pobres de las zonas rurales de México. También muestra cómo este programa no solo tuvo efectos a corto plazo en esta población, sino el efecto positivo en la escolaridad de por vida del individuo. Para el año 2017, el programa federal Bolsa Família, programa heredero del programa Bolsa Escola que fue el otro programa pionero en TMCs, atiende a 11 millones de familias (46 millones de personas) \citep{Fiszbein2009ConditionalReport}. Ya en el 2008, virtualmente casi todo los países latinoamericanos tenían alguna especie de transferencia condicionada. En otras partes del mundo, Bangladesh, Indoneisa y Turquía se han caracterizado por tener programas de TMCs de gran escala, mientras que Cambodia, Malawi, Marocco, Pakistan y Sudafrica para ese mismo año adoptaron programas pilotos sobre TMSs \citep{Fiszbein2009ConditionalReport}.
+
+\cite{Soares2007ConditionalPaper} dado que este fue uno de los primeros documentos que se preocupo por medir el impacto que puede tener las TMC en la reducción de la desigualdad. Estando en los resultados más destacados el pequeño impacto que tuvo en la reducción del índice GINI.\cite{Soares2010EvaluatingPerspective} indaga un poco más sobre el impacto del programa Bolsa Familia en donde concluye que el programa Bolsa Familia ha tenido un impacto positivo en la participación laboral adulta, con un impacto mayor sobre las mujeres.
+
+Existen otros programas de transferencias monetarias condicionadas, mucho más amplios que tienen más condiciones. \cite{Lagarde2007ConditionalReview} analizando 6 programas distintos de TMCs llega a la conclusión que dichos programas son moderadamente efectivos en incrementar el uso de los servicios de salud y mejorar resultados nutricionales sobre la población tratada así como incentivar comportamientos preventivos de salud. 
+
+Y a medida que los TMCs empezaron a captar el interés de muchos investigadores del desarrollo y de gobiernos de África subsahariana, \cite{Baird2011} mediante un RCT aplicado a comunidades rurales de Malawi, queriendo ver si era necesario que las transferencias monetarias fueran o no fueran condicionadas. El artículo concluyó que en el grupo tratamiento, que fue le que recibió las transferencias condicionadas, hubo un aumento sustancial en la asistencia a los colegios y además obtuvo mejores desempeños en las pruebas académicas en comparación al grupo control que solo recibió las transferencias monetarias condicionadas. 
+
+No obstante, además de \cite{Baird2011} otros autores han intentando hacer aportes a la interrogante  de si las transferencias monetarias deberían ser condicionadas o no. Autores como \cite{DeBrauw2011MustMexico} realizando un estudio para México y \cite{NorbertSchady2008CashEcuador} para ecuador encontraron en experimentos parecidos a los realizados por \cite{Baird2011} que la asistencia escolar era significativamente inferior en las personas que hacían parte del grupo control frente a las que hacían parte del grupo tratamiento.
+
+Se desarrollaron más artículo relacionados con el uso de RCTs para el estudio del impacto de las transferencias monetarias condicionadas en donde la mayoría de estudios tuvieron efecto en Africa subsahariana. Mediante un experimento controlado, \cite{Asfaw2014CashKenya} realizaron un RCT en Kenya cuyo objetivo era investigar el impacto de un programa de transferencias condicionadas para los programas para huérfanos y niños en condiciones de vulnerabilidad en las decisiones acerca de actividades productivas por parte de los hogares que adoptan a dichos niños.
+
+Tres mecanismos de focalización para la selección de hogares en dichos programas se conocen como Proxy Means Testing (PMT),en el cual se usan los activos para definir que hogares tratar, Community-Based Targeting (CBT), donde la misma comunidad hace un ranking de cuales son los hogares más pobres, y un método híbrido que combina a los dos. En la literatura hay consenso de que el mecanismo PMT es más efectivo que los mecanismos que emplean CBT como lo encontraron \cite{Alatas2012TargetingIndonesia} en su estudio experimental para Indonesia y como lo confirma \cite{Stoeffler2016ReachingCameroon} en una evaluación de un programa piloto de transferencias monetarias condicionadas, donde concluyes que hay que tener cuidado en utilizar los mecanismos de CBT dado que éstos son menos efectivos que PMT en la selección de hogares que requieran el programa y además que los CBTs pueden mejorar sustancialmente si se les realiza un seguimiento más regular, así como una mayor integración en el uso de los CBT junto a los PMT. 
+
+Pero, para informar un poco más acerca de los impactos sobre los niños de los programas de transferencias monetarias condicionadas, se recurrió en primera instancia al trabajo de \citep{Ozer2009EffectsProblems}, \citep{Baird2010TheWomen} y \citep{Pettifor2012CanPrevention}. Dado que \cite{Ozer2009EffectsProblems} concluyen que este tipo de intervenciones estatales que se centran en invertir en las necesidades básicas de capital humano pueden ejercer un efecto dominó a más largo plazo en el desarrollo de los niños. Por otra parte, el trabajo de \cite{Baird2010TheWomen} afirman que los programas de transferencias condicionadas son efectivos para aumentar la matrícula y la asistencia escolar, sin embargo señalan que estos efectos ayudaron a su vez a la disminución de embarazos adolescentes pues ayudaba a evitar la actividad sexual. \cite{Pettifor2012CanPrevention} apoyan esta postura con su trabajo pues afirman que las transferencias monetarias condicionadas han tenido un impacto poco conocido en cuanto a  la prevención del VIH, realizando un estudio de los adolescentes de los países en desarrollo donde han sido implementadas estas intervenciones.
+
+Pero, el alcance de los TMC, toca muchas más áreas. \cite{Kilburn2020The068} utilizando datos primarios estudiaron la intervención de transferencia de efectivo condicionada y aleatorizada para niñas en Sudáfrica que se desarrolló entre 2011 y 2015, mostrando que la transferencia de efectivo reduce consistentemente las diferentes formas de abuso que pueden afectar  a las niñas, en particular a través de los dominios de agencia económica, violencia y relaciones. \cite{Kennedy2014ExploringTanzania} Estudiaron la correlación entre el riesgo de contagiarse VIH con la pobreza y la desigualdad de género; Buscando explorar la viabilidad y la eficacia de una intervención de transferencia de efectivo para mujeres jóvenes en Iringa, Tanzania, demostrando que un programa de transferencia de efectivo ayudaba a reducir la instancia del VIH, las infecciones de transmisión sexual y los embarazos no deseados. 
+ 
+Otros campos en los cuales los TMC pueden afectar las características socio económicas es presentado por \cite{Case2005HeKwaZulu-Natal} pues ellos examinaron el alcance e impacto de la subvención de manutención infantil de Sudáfrica, encontrando que los niños beneficiados tenían más probabilidades de matricularse en la escuela en los años posteriores a la recepción de la subvención que los otros niños. Concluyendo que a una mayor pobreza en los hogares que reciben subvenciones. Se permite evidenciar que el desarrollo infantil es sensible a los entornos de la vida temprana, y que los niños y niñas pobres tienen una probabilidad mayor de déficit cognitivos y conductuales, examinado por \cite{Paxson2010DoesAnd} al estudiar un programa de TMC administrada por el gobierno para madres pobres de Ecuador, el cual influyó en el desarrollo de los niños pequeños.
+
+Ahora bien, enfocando el trabajo en Colombia \cite{Barrera-Osorio2007TheQuasi-experiment} evaluaron el impacto de un programa de reducción de tarifas lanzado por la ciudad de Bogotá en 2004. Encontraron que las reducciones de tarifas ofrecidas a las personas de los niveles 1 y 2 de Sisben tienen un efecto positivo en la inscripción en los grados primarios de los estudiantes de Sisben 1 y en los grados de secundaria para el Sisben 2. Específicamente, las estimaciones sugieren que Gratuidad aumenta la probabilidad de la matriculación para los estudiantes de Sisben 1 de edad primaria en aproximadamente un 3 por ciento, y para los estudiantes de Sisben 2 de secundaria en aproximadamente un 6 por ciento.
+
+Las evaluaciones de impacto también demuestran que en las zonas rurales el programa aumenta el ahorro formal, la adquisición de bienes durables (como neveras), la probabilidad de acceder a crédito formal y desincentiva el ahorro informal \cite{Robles2018Las2001-2018}. Por lo anterior, dichos autores llegan a la conclusión de que en términos generales el programa tiene un impacto más notorio en las zonas rurales que en las urbanas.
+
+ \cite{Robles2018Las2001-2018} menciona en su texto que Familias en Acción se ha convertido en uno de los programas sociales más evaluados en la historia reciente de Colombia y también uno de los cuáles más gasto público ha recibido como los autores muestran en su gráfico 7 de su investigación. Además, el programa ha logrado beneficiar miles de familias anualmente, desde 2001 hasta el 2017 \citep{Robles2018Las2001-2018}. Uno de los retos del programa familias en acción como lo muestran \cite{Robles2018Las2001-2018} es que hay que incentivar la oferta de los servicios ofrecidos por el programa, es decir cobertura en salud como en educación, tanto como la demanda para que el programa sea efectivo.
+
+\cite{PulidoBuitrago2013LosAccion} con el propósito de recelar los efectos políticos y sociales que ha generado el programa Familias en Acción en los beneficiarios y en su relación con el Estado, examinó el surgimiento y la consolidación de los programas de (TMC) en América Latina desde mediados de los noventa como principales estrategias de la ‘lucha contra la pobreza’.
+
+
 % Raul y Juliana
 \section{Intervención y contexto}
+
+En la década de los 90, Colombia paso por una gran crisis económica que afecto el consumo de los hogares al afectar sus ingresos, lo cual trajo como consecuencia una menor asistencia de los niños y jóvenes a los centros escolares. A raíz de eso el gobierno nacional mediante el Departamento Nacional de Planeación (DNP) implemento una política para velar por la educación de la población joven, el cual hoy se conoce como Familias en Acción.
+
+Familias en Acción es el programa de Prosperidad Social que entrega a todas aquellas familias que se encuentran en estado de pobreza y extrema pobreza con niños, niñas y adolescentes un incentivo económico condicionado que complementa sus ingresos para la formación de capital humano, la generación de movilidad social, el acceso a programas de educación media y superior, la contribución a la superación de la pobreza y pobreza extrema y a la prevención del embarazo en la adolescencia. 
+
+Además, se entrega un incentivo de salud y uno de educación, el de salud se entrega cada dos meses (6 veces al año) hasta el día antes que el niño o niña cumpla los 6 años, siempre y cuando asistan oportunamente a las citas de valoración integral en salud para la primera infancia en la respectiva IPS. Y el incentivo de educación se entrega cada dos meses, menos en el período de vacaciones de fin de año escolar, es decir, cinco veces al año, siempre y cuando la familia cumpla con dos compromisos: los niños, niñas y adolescentes deben asistir como mínimo al 80\% de las clases programadas y no pueden perder más de dos años escolares. En el caso que uno de los participantes tenga 18 o 19 años debe estar cursando mínimo 10° grado, y si tiene 20 años grado 11°.
+
 
 % Raul y Juliana
 \section{Datos}
 
+% Describir de donde provienen los datos 
+
+Los datos para este análisis provienen de las bases de datos anonimizadas para el \textit{Sisbén III} para el corte de diciembre del 2016\footnote{Dicha base de datos se obtuvo por una solicitud directa que se realizó al Departamento Nacional de Planeación (DNP)}. Dado que hay varias bases de datos asociadas al Sisbén III para el corte de diciembre de 2016 las estimaciones se realizaron usando exclusivamente la base de datos llamada \textit{Sisben\_III\_PERS\_DIC2016.dta}. La última base de datos mencionada, se caracteriza por ser un panel que va del año 2011 al año 2016 en donde cada observación corresponde a una persona beneficiaria el Sisbén III en un determinado año. Es importante destacar que esta base de datos sufre dos importantes limitaciones: 1) No se tiene información sobre el año al que pertenece cada observación \textit{Por lo que se limita en gran medida los diseños de investigación que se pueden realizar con dicha base de datos} y 2) más importante para el presente estudio, es la carencia de una dummy que indique que observación es beneficiaria de familias en acción y que observación no lo es\footnote{Para más información sobre la base de datos empleada consultar: https://anda.dnp.gov.co/index.php/catalog/98}. 
+
+Ahora bien, por la manera en la que fueron codificadas las variables desde el DNP fue necesaria realizar un tratamiento a la base de datos para adecuarla a las necesidades del estudio. Por tanto, las variables \textit{asistente a centro educativo}, \textit{sexo}, \textit{embarazada}, \textit{percibe ingresos} y \textit{estudio el último mes} debieron ser codificadas como variables dummys con valores discretos 0 y 1. De igual forma, la variable \textit{estudio el último mes} se definió con el valor de 1 si la persona había estudiado en el último mes y 0 si se había dedicado principalmente a realizar otra actividad distinta a estudiar. Finalmente, se filtró la base de datos de tal forma que se seleccionó solo dos grupos poblaciones: g1) consistía esencialmente de niños entre los a 6 a 11 años mientras que g2) consistía de adolescentes entre los 12 a los 17 años\footnote{La base de datos filtrada contenía un total de $22286$ observaciones.}. Lo último se debe a que se busca ver el efecto del \textit{programa familias en acción} en el acceso a la educación por lo que tiene sentido estudiar a las personas que hagan parte de estos grupos poblacionales.\footnote{En realidad el impacto que se identificó no fue el de familias en acción sobre el acceso a la educación sino el efecto que genera el umbral de $30.56$ para el puntaje de sisbén 3 en separar las potenciales familias beneficiarias del programa familias en acción de las familias que no pueden acceder al programa por superar este umbral en el acceso a la educación. Lo anterior se debe, principalmente, a limitaciones en la base de datos empleada como se explicará con mayor detalle en la sección de metodología}. 
+
+Finalmente, la tabla \ref{tab:info_var}\footnote{Se resalta que si bien se menciona la variable tratamiento: \textit{Hace parte de familia en acción}, se resalta que dicha variable no se trabajará directamente ni se trabajará cuantitativemente sino que sirve como variable de referencia para el fuzzy RDD que se empleará como metodología empírica y de estimación.} muestra que variables se usaron en las estimaciones y qué miden así como su media muestral. 
+
+
+
+\begin{table}[h]
+\centering
+\caption{Información variables claves}
+\begin{tabular}{llll}
+\hline
+\hline
+\textbf{Nombre de la variable}                                                                                                                                                                                                       & \textbf{Abreviación} & \textbf{Tipo de variable} & \textbf{Media} \\ \hline
+\textbf{Variable Outcome (Respuesta):}                                                                                                                                                                                               &                      &                           &                \\
+Estudio el último mes                                                                                                                                                                                                                   & EUM                  & dummy                     & 0.77           \\
+\textbf{Variable tratamiento:}                                                                                                                                                                                                       &                      &                           &                \\
+Hacer parte de familias en acción                                                                                                                                                                                                     & FeA                  & dummy                     & NA             \\
+\textbf{Instrumento:}                                                                                                                                                                                                                &                      &                           &                \\
+\begin{tabular}[c]{@{}l@{}}Umbral del sisbén que separá potenciales \\ beneficiaris de familias en acción de\\  persona que no pueden acceder \\ el programa por exceder el valor crítico\\ $T_i = 1(PS3_i \geq 30.56)$\end{tabular} & T                    & dummy                     & 0.25           \\
+\textbf{Covariadas:}                                                                                                                                                                                                                 &                      &                           &                \\
+Sexo                                                                                                                                                                                                                                 & S                    & dummy                     & 0.52           \\
+Embarzada                                                                                                                                                                                                                            & E                    & dummy                     & 0.26           \\
+Pecibe ingresos                                                                                                                                                                                                                      & I                    & dummy                     & 0.072          \\
+\textbf{Running variable:}                                                                                                                                                                                                           &                      &                           &                \\
+Puntaje del Sisbén III                                                                                                                                                                                                               & PS3                  & variable continua         & 22.5      \\ \hline
+\end{tabular}
+\label{tab:info_var}
+\end{table}
+
+
 % Raul y Juliana
 % german
+
 \section{Metodología}
+
+Dado que existe una regla institucional bien establecida que indica que las personas que cuentan con un puntaje de sisbén por encima de $30.56$ están inhabilitadas a \textit{acceder al programa familias en acción} mientras que las personas con puntaje menor pueden ser posibles beneficiarios del programa se tiene que si uno se concentra alrededor del umbral que separa ambos grupos, es decir $30.56$, se tendría una especie de experimento natural alrededor de dicho umbral donde la asignación al tratamiento, en este caso pertenecer o no pertenecer a familias en acción, se puede ver como una asignación aleatorizada o una loteria alrededor del umbral. Este es el caso, porque algunas personas por poco superaron por poco el umbral de asignación $30.56$ mientras que otras personas por poco no lo superaron sin que estás personas tengan control directo sobre dicha asignación\footnote{Sobre esta última afirmación relacionada con no manipulación por parte de los individuos se hablará un poco más en la sección de resultados.}
+
+\subsection{Fuzzy RDD}
+
+Por lo anterior, un diseño de investigación basado en un \textit{Regression Discontinuity Design (RDD)} sería propicio dado que dicho diseño se basa en estimar un efecto alrededor de un umbral establecido que separa al grupo tratado del no tratado \citep{Lee2010RegressionEconomics}\footnote{La definición dada acá es la asociada a un \textit{Sharp} RDD donde hay perfecto cumplimiento al tratamiento, es decir, si una persona es asignada al tratamiento dicha persona cumple con el rol que se le asigno}. No obstante, como lo expresan \cite{Lee2010RegressionEconomics} en caso tal de que no haya perfecto cumplimiento al tratamiento\footnote{Es decir, los individuos no cumplen perfectamente con el rol que se les dio en la asignación} o existan otras formas de asignación al tratamiento además de la regla institucional/umbral es necesario emplear lo que se conoce como un \textit{fuzzy RDD}\footnote{Se recuerda al lector que un fuzzy RDD consiste en 3 ecuaciones principales: 1) ecuación estructural, 2) una primera etapa y 3) una forma reducida siguiendo un enfoque idéntico al de un diseño de investigación por variable instrumental donde el umbral/regla institucional que determina la asignación al tratamiento actua virutualmente como instrumentod de la variable de asignación \citep{Cunningham2018CAUSAL1.7}. La diferencia entre un \textit{Sharp RDD} y un \textit{Fuzzy RDD} es excatamente paralela a la diferencia entre un RCT con perfecto cumplimiento y un RCT con incumplimiento en la asignación, dónde a intención a tratar es aletorizda \citep{Lee2010RegressionEconomics}. Es por ello que la estructura de un Fuzzy RDD sigue un diseño de investigación por varible instrumental}. En nuestro presente estudio, el uso del fuzzy RDD es necesario dado que que existen cuatro mecanismos diferentes por medio del cual se puede asignar familias en acción, uno de ellos es el puntaje del Sisbén (Regla institucional), mientras que los otros 3 son asignaciones a población desplazada, población indígena y personas que hagan parte Red Unidos   \citep{Robles2018Las2001-2018}. La presencia de otros mecanismos hace que algunas personas con un puntaje del sisbén de $30.56$ puedan acceder al programa a pesar de que por la regla institucional no debería. 
+ 
+Siguiendo la metodología de \cite{Angrist2008MostlyCompanion} la ecuación estructural del fuzzy RDD para la investigación planteada está dada por la ecuación \ref{eq:estructural}.\footnote{Dicha ecuación corresponde a un diseño local lineal discontinuo que estima el impacto que tendría la asignación de familias en acción en el acceso a la educación para las personas que se encuentran cerca al umbral institucional.} 
+
+\begin{equation}
+    EUM_i = \alpha + \beta_1 PS3_i + \rho FeA_i + \eta_i
+    \label{eq:estructural}
+\end{equation}
+
+Donde $FeA$ es la \textit{variable de asignación al tratamiento}, $PS3_i$ es la \textit{running variable} y $EUM_i$ es la \textit{variable outcome o resultado}. Ahora bien, la ecuación de la primera etapa del fuzzy RDD está dada por \ref{eq:fist_stage}.\footnote{Dicha ecuación estima el impacto que tiene el instrumento/intención a tratar $T_i$ sobre la variable de asignación $FeA_i$.}
+
+\begin{equation}
+    FeA_i = \gamma_0 +  \gamma_1 PS3_i + \pi T_i + \xi_{1i}
+    \label{eq:fist_stage}
+\end{equation}
+
+Donde $T_i$ es el instrumento para la variable $FeA_i$\footnote{Cómo ya se mencionó, un fuzzy RDD se puede ver como un sharp RDD con incumplimento perfecto por lo que la variable de asignación requiere un instrumento. En palabras de \cite{Angrist2008MostlyCompanion} un fuzzy RDD es un diseño de investigación donde el umbral donde ocurre la discontinuidad se convierte en una variable instrumental para el estado tratamiento. Dicho instrumento se puede ver como la intención a tratar, en este caso como los individuos que por regla institucional podrían o no acceder al program familias en acción dado su puntaje del sisbén.}. Finalmente, y como ya se manifestó en la sección de datos, la base de datos del Sisbén III con la que se hizo la estimación tiene la desventaja de no tener información de que personas en realidad accedieron a familias en acción y quienes no lo hicieron, y tan solo tiene explícitamente el puntaje del sisbén, por lo que es necesario estimar la forma reducida del fuzzy RDD para poder estimar algún impacto causal. Si se reemplaza la ecuación \ref{eq:fist_stage} en \ref{eq:estructural} se obtiene la ecuación que da la forma reducida \ref{eq:reduced_form}.\footnote{Dicha ecuación estima el impacto directo que tiene el instrumento/intención a tratar $T_i$ sobre la variable outcome/resultado $EUM_i$.}
+
+\begin{equation}
+    EUM_i = \mu + \kappa_1 PS3_i + \rho \pi T_i + \xi_{2i}
+    \label{eq:reduced_form}
+\end{equation}
+
+Dado que la ecuación \ref{eq:reduced_form} se puede estimar por medio de un \textit{diseño de regresión lineal local discontinuo} se tiene que el impacto causal de interés está dado por \ref{eq:impacto} \footnote{Éste es el parámetro causal de interés  que se planea identificar en este artículo por medio de  estimar directamente la forma reducida en lugar de estimar todo el fuzzy RDD (Dado que no se conoce la asignación a tratamiento $FeA$ por las limitaciones propias de la base de datos usada). De igual forma, mientras que en un fuzzy RDD el impacto que se termina estimando es un \textit{Local Average Treatmen Effect (LATE)} que debe satisfacer además de los supuestos usuales de un RDD la \textit{restricción de exclusión} y el \textit{supuesto de monotonicidad} para un \textit{diseño de investigación por variable instrumental} se tiene que al estimar solo la forma reducida \ref{eq:reduced_form} en el presente artículo ya no es necesario satisfacer el supuesto de monotonicidad ni la restricción de exclusión y que el impacto causal \ref{eq:impacto} si se puede interpretar como un \textit{Average Treatmente Effect (ATE)} para los individuos que se encuentran cerca al umbral de corte \citep{Imbens1994IdentificationEffects}}.
+
+% agregar lo de que ese efecto se interpreta como un ATE distinto a un LATE que sería el caso de un fuzzy RDD y citar al otra Angrist e Irving
+
+\begin{equation}
+    \rho \pi = \lim \limits_{PS3 \to 30.56^{+}} E[EUM | PS3 = 30.56] - \lim \limits_{PS3 \to 30.56^{-}} E[EUM | PS3 = 30.56] \label{eq:impacto}
+\end{equation}
 
 % german
 \section{Resultados}
 
-% german
+\subsection{Estimación principal}
+
+% Presentar los resultados de no manipulación
+
+Dado los cuatro mecanismos existentes de asignación a familias en acción y dado que la base de datos no contiene explícitamente que personas son beneficiarias del programa y que personas no lo son, las estimaciones se centraran en estimar la forma reducida \ref{eq:reduced_form} donde el impacto que eventualmente se identificará será el impacto de la intención a tratar sobre el acceso a la educación dado por \ref{eq:impacto}. Dado que, en la ecuación para la forma reducida $T_i$ se puede interpretar como la intención a tratar o a dar familias en acción a partir del puntaje del sisbén\footnote{Nuevamente, se recuerda al lector que en este caso se asumirá que si tiene un puntaje por encima de 30.56 no será parte de familias en acción mientras que si tiene un puntaje mejor a 30.56 será beneficiario en familias en acción aunque en la práctica esto no es estrictamente cierto por incumplimiento perfecto (algunas personas que podrían ser beneficiadas simplemente deciden por motivos personales u otras razones hacer parte del programa) o por los otros tres mecanismos de asignación a familias en acción que existen.} la estimación de \ref{eq:reduced_form} se puede realizar mediante un \textit{Sharp RDD} donde es necesario que se cumpla los supuestos de: 1) no manipulación por parte de los individuos que se encuentran alrededor del umbral y 2) que la única variable que salta en el umbral es la intención a tratar $T_i$, es decir, que haya continuidad en las otras covariadas empleadas en el modelo\footnote{Dado que si alguna otra variable salta además de la intención a tratar entonces se puede tener otra explicación plausible alternativa.} \citep{Cunningham2018CAUSAL1.7}.\
+
+La no manipulación por parte de los individuos alrededor del umbral está garantizada tanto por el contexto institucinal como por los resultados estadísticos. Del contexto institucional, a la hora de asignar el puntaje del Sisbén a cada individuo el DNP lo hace con una \textit{fórmula secreta o al menos desconocida} para los posibles beneficiarios y luego de que éstos son entrevistados por lo que es muy improbable que haya manipulación del puntaje de éstos alrededor del umbral de asignación a familias en acción por medio de dicho puntaje. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.9 \textwidth]{imagenes/estimax_principal/histrograma_puntaje_sisben.png}
+    \caption{El histograma claramente muestra que no hay manipulación por parte de los individuos alrededor del umbral $30.56$ dado la continuidad de la variable puntaje del sisbén 3 alrededor de dicho umbral. La línea vertical roja denota el puntaje de asignación a familias en acción vía puntaje del sisbén. }
+    \label{fig:histog_completa}
+\end{figure}
+
+Frente a la evidencia estadística de no manipulación, se observa de la figura \ref{fig:histog_completa} que la variable puntaje del sisbén es continua alrededor del umbral por lo que no hay manipulación por parte de los individuos alrededor del umbral.
+
+Esto se complementa con el \textit{test de McCrary} en donde se obtuvo un p-valor de 0.5232 por lo que claramente no se rechaza la hipótesis nula de no manipulación. Lo anterior, se corrobora gráficamente por la continuidad de la gráfica asociada al test de McCrary dada por la figura \ref{fig:mccrary_complete}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.9\textwidth]{imagenes/estimax_principal/mccrary_principal.png}
+    \caption{Gráfica asociada al Test de McCrary para la estimación principal}
+    \label{fig:mccrary_complete}
+\end{figure}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccc}
+\hline
+\hline
+\multicolumn{1}{c}{}    & \multicolumn{3}{c}{Covariadas}                                                                                                                                                     \\ \cline{2-4} 
+Características         & \begin{tabular}[c]{@{}c@{}}Sexo\\ (1)\end{tabular}      & \begin{tabular}[c]{@{}c@{}}Embarazada\\ (2)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Percibe Ingreso\\ (3)\end{tabular} \\ \hline
+Impacto                 & \begin{tabular}[c]{@{}c@{}}0.045\\ (0.701)\end{tabular} & \begin{tabular}[c]{@{}c@{}}-0.027\\ (0.432)\end{tabular} & \begin{tabular}[c]{@{}c@{}}-0.053\\ (0.871)\end{tabular}      \\
+Media                   & 0.52                                                    & 0.025                                                    & 0.07                                                          \\
+Controles               & No                                                      & No                                                       & No                                                            \\
+Número de observaciones & 22286                                                   & 22286                                                    & 22286    \\ \hline                                                    
+\end{tabular}
+\caption{Esta tabla contiene las regresiones lineales locales discontinuas usando cada una de las covaridas como variables dependientes en función del puntaje del sisbén. Como se observa, en el umbral $30.56$ el efecto del salto no es significativo. En paréntisis se encuentran los valores de los p-valores.}
+\label{tab:cov_main}
+\end{table}
+
+Frente a la continuidad de las covariadas, las gráficas \ref{fig:sexo}, \ref{fig:embarazada} y \ref{fig:percibe_ingreso} muestran evidencia gráfica de la continuidad de dichas variables alrededor del umbral. De igual forma, al aplicar un \textit{diseño de regresión lineal local discontinuo} usando cada covariada como variable dependiente y usando el puntaje del sisbén como running variable, basando la estimación en un diseño con kernel rectangular y con un ancho de banda igual a 1, se obtiene los resultados que se presentan en la tabla \ref{tab:cov_main}. Como se puede observar, no hay evidencia estadística de salto alrededor del umbral\footnote{Esto se concluye de la no significancia del impacto}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.35]{imagenes/estimax_principal/sexo_main.png}
+    \caption{Continuidad de la \textit{covariada sexo} alrededor del umbral}
+    \label{fig:sexo}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.35]{imagenes/estimax_principal/embarzada_main.png}
+    \caption{Continuidad de la \textit{covariada embarazada} alrededor del umbral}
+    \label{fig:embarazada}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.35]{imagenes/estimax_principal/percibe_ingreso_main.png}
+    \caption{Continuidad de la \textit{covariada percibe ingreso} alrededor del umbral}
+    \label{fig:percibe_ingreso}
+\end{figure}
+
+Por los resultados anteriores, se observa que los dos supuestos de identificación por medio de un RDD se satisfacen\footnote{Estrictamente hablando, no hay evidencia que muestre que haya incumplimiento de los supuestos de identificación dado que en un diseño de investigación de evaluación de impacto no es posible garantizar el total cumplimiento de los supuestos sino la plausibilidad de que dichos supuestos sean ciertos con los datos que se tienen.} por lo que se procede a realizar la estimación principal.
+
+Realizando un \textit{diseño de regresión lineal local discontinuo} con \textit{kernel uniforme} y \textit{ancho de banda} igual a 1 se estima la ecuación asociada a la forma reducida \ref{eq:reduced_form}. Los resultados se presentan en la tabla \ref{tab:estimaxs_principales} y el resultado gráfico del impacto se puede observar en la figura \ref{fig:main_estimax_interes}. 
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\hline
+\hline
+\multicolumn{1}{c}{}    & \multicolumn{2}{c}{Estimaciones con toda la muestra}                                                                                     \\ \cline{2-3} 
+Características         & \begin{tabular}[c]{@{}c@{}}Estudio el útimo mes\\ (1)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Estudio el último mes\\ (2)\end{tabular} \\ \hline
+Impacto                 & \begin{tabular}[c]{@{}c@{}}-0.03**\\ (0.042)\end{tabular}            & \begin{tabular}[c]{@{}c@{}}-0.039**\\ (0.032)\end{tabular}            \\
+Media                   & 0.78                                                               & 0.78                                                                \\
+Controles               & No                                                                 & Sí                                                                  \\
+Número de observaciones & 22286                                                              & 22286   \\ \hline                                                           
+\end{tabular}
+\caption{Esta tabla contiene las regresiones lineales locales discontinuas usando la variable $EUM$ como variable dependiente en función del puntaje del sisbén. Como se observa, en el umbral $30.56$ el efecto del salto es significativo, por lo que existe una discontinuidad alrededor del umbral causada por encontrarse por encima o debajo del umbral. Para la estimación con controlos, los controles empleados fueron las covariadas: \textit{sexo}, \textit{embarazada} y \textit{percibe ingresos}.En paréntesis se encuentran los valores de los p-valores. ** denota significancia del 5 \%}
+\label{tab:estimaxs_principales}
+\end{table}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.3]{imagenes/estimax_principal/main_estimax_interes.png}
+    \caption{Discontinuidad de la \textit{variable Estudio el último mes (EUM)} alrededor del umbral. El salto representa le estimación del impacto.}
+    \label{fig:main_estimax_interes}
+\end{figure}
+
+% Intepretación de los resultados
+
+De la tabla \ref{tab:estimaxs_principales} 
+
+% Mencionar lo de inferencia randomizada y placebo
+Finalmente, cómo análisis de robustes se decidió realizar inferencia randomizada para calcular el p-valor asociado a la regresión principal, es decir, el p-valor asociado al impacto que tiene el instrumento o la condición de estar por debajo del umbral\footnote{Recordar que el valor de dicho umbral es $30.56$} del puntaje del sisbén para poder acceder a familias en acción sobre el acceso a la educación. Adicionalmente, se decidió realizar dos experimentos placebos en dónde se utilizaban valores de corte o umbral arbitrarios, uno arriba y otro debajo del umbral institucional, con la finalidad de ver si la metodología empleada era robusta a cambios de umbral. Los resultados de lo anterior, se encuentran en el anexo. 
+
+\subsection{Estimaciones auxiliares}
+
+Para complementar la estimación principal, se decidió desagregar las observaciones en los dos grupos poblaciones principales, es decir, un un grupo \textit{g1} que consistía principalmente en niños entre los 6 y 11 años y en un grupo \textit{g2} que consistía principalmente en niños entre los 12 y 17 años y se realizaron las estimaciones con cada grupo. La idea de lo anterior, era ver si existía en efecto diferenciado del umbral sobre el acceso a la educación entre los dos grupos poblacionales mencionados. Los resultados que validan los supuestos para el uso del RDD se encuentran en el anexo. 
+
+Los resultados para una \textit{diseño de regresión lineal local discontinuo} con \textit{kernel uniforme} y \textit{ancho de banda} igual a 1 para estimar la ecuación asociada a la forma reducida \ref{eq:reduced_form} para cada uno de los grupos poblaciones mencionados se encuentran en la tabla   y la evidencia visual en las gráficas   .
+
+
+
+
+% Raul, juliana y german
 \section{Conclusiones}
+
+
+
+%% Agregar una sección de como estudios futuros pueden mejorar los estudios encontrados en el presente análisis. Dos formas (Dadas las fuertes limitaciones en los datos): 
+
+%%%% Hacer un fuzzy RDD 
+%%%% Obtener más información del programa de tal forma de poder hacer estimaciones desagregadadas por regiones sin poder mucho poder estadístico. Es decir, trabajar con un panel más completo
+
+\clearpage
 
 % german
 \section{Anexos}
+
+\subsection{Inferencia randomizada y expermiento placebo para la regresión principal}
+
+\subsubsection{Inferencia randomizada}
+
+Para verificar que en realidad si se encontró un impacto causal significativo se decidió realizar inferencia randomizada para el p-valor del impacto causal estimado en la regresión principal dado por la ecuación \ref{eq:reduced_form}\footnote{En la práctica es muy usual utilizar inferencia randomizada para calcular los errores estándar de los estimadores utilizados en la identificación del impacto y mediante los errores estándar obtenidos mediante dicho procedimiento calcular los respectivos p-valores \citep{Duflo2017HandbookExperiments}}. Se obtuvo un p-valor muy cercano a cero mediante el procedimiento de inferencia randomizada lo que corrobora el resultado obtenido en la regresión principal de la existencia de un impacto significativo de la asignación a familias en acción mediante el umbral del puntaje el sisbén $30.56$ en el acceso a la eduación. 
+
+\subsubsection{Expermientos placebo}
+
+Otro análisis de robustes, ahora para evaluar la calidad de la metodología empleada, fue recrear la metodología empleada para la identificación del impacto causal de la regresión principal pero utilizando umbrales de puntaje del Sisbén arbitarios de tal forma de saber si los resultados también eran o no eran significativos en estos umbrales placebo. 
+
+
+
+
+\subsection{Validación de supuestos para las regresiones auxiliares}
+
+\subsubsection{Grupo poblacional 1: Niños entre 6 a 11 años}
+
+
+
+\subsubsection{Grupo poblacional 2: Adolescentes entre 12 a 17 años}
+
+
 
 \newpage
 
