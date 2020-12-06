@@ -13,7 +13,7 @@ library(rddensity)
 library(lpdensity)
 library(rdlocrand)
 
-setwd("~/Documents/GitHub/semestre5_git/proyecto_metodologia_2/trabajo_empirico/bases_de_datos/bases_de_datos_SISBEN")
+setwd("~/Documents/GitHub/semestre5_git/proyecto_metodologia_2/bases_de_datos/bases_de_datos_SISBEN")
 
 #---- Indicaciones/información estimación ----
 
