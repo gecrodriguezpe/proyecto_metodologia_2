@@ -41,7 +41,7 @@
 \begin{document}
 
 \title{Transferencias condicionadas en Colombia: ¿Cómo la asignación por puntaje del Sisbén a Familias en Acción afecta la accesibilidad a la educación?\footnote{El lector interesado podrá reproducir la totalidad del artículo utilizando las bases de datos y scripts realizados en R en el siguiente enlace: https://github.com/gecrodriguezpe/proyecto\_metodologia\_2.git}}
-\shortTitle{Rodríguez, López y Pérez: Revisión de literatura}
+\shortTitle{Rodríguez, López y Pérez: Impacto del puntaje del Sisbén en el acceso a la educación}
 \author{Germán Rodríguez, Juliana López and Raúl Pérez\thanks{Rodríguez: Universidad Nacional de Colombia (email gecrodriguezpe@unal.edu.co); López: Universidad Nacional de Colombia (email jvlopezne@unal.edu.co); Pérez: Universidad Nacional de Colombia (email rhperezp@unal.edu.co).}}
 \date{\today}
 \pubMonth{December}
@@ -52,31 +52,28 @@
 \Keywords{educación, transferencias monetarias condicionadas, evaluación de impacto, familias en acción}
 
 \begin{abstract}
-El presente texto tiene como fin estimar el impacto que tiene el programa Familias en Acción en que los niños y jóvenes entre los 6 y 17 años de edad asistan a un centro de educación media.sobre la educación. Para ello, se realizara una  evaluación de impacto estimando un Fuzzy RDD empleando la base de datos del SISBEN II. Al final del análisis se encontró que efectivamente el programa de estudio (Familias en Acción) tuvo un impacto positivo en la asistencia escolar en el rango de edad anteriormente mencionado.
+Se busca identificar cuál es el impacto que tiene la regla institucional de un puntaje de Sisbén por debajo de $30.56$ como mecanismo de asignación al programa Familias en Acción en el acceso a la educación por parte de los niños y jóvenes entre los 6 y 17 años de edad. Para realizar la identificación del impacto causal se usa un diseño de investigación basado en la ecuación asociada a la forma reducida de un Fuzzy RDD, dónde se usa como instrumento el puntaje de asignación al programa basado en el Sisbén. Todas las estimaciones se realizaron utilizando las bases de datos del Sisbén III proporcionadas por el DNP. Se encontró que efectivamente la regla institucional de asignación a familias en acción mediante el puntaje del Sisbén si tiene un efecto causal sobre la accesisibilidad a la educación para las personas en el rango de edad mencionando aumentando el acceso a la educación en un 5 \% en relación a la media para el rango de edad completo y en un 7 \% en relación a la media cuando se realizó la estimación de manera desagregada para los niños entre 6 a 11 años. Para los adolescentes entre 12 a 17 años no se encontró impacto significativo a la hora de hacer la estimación con este grupo de manera desagregada. 
 \end{abstract}
-
 
 \maketitle
 
 % Raul y Juliana
 \section{Introducción}
     
-Tal como afirma de Walque et al. (2017), la pobreza tiene efectos significativos, perjudiciales y de largo alcance  en  el  desarrollo  infantil.   Es  por  esto que  a  lo  largo  de  la  historia  se  han  creado  programas  de transferencias de efectivo con el fin de apoyar el desarrollo infantil y adolecente. En su desarrollo histórico los programas pioneros de TMC empezaron principalmente en México y en Brasil en el año 1997, posteriormente las TMC se han extendido a países de América Latina y más allá.
+Tal como afirma de \cite{deWalque2017CashDevelopment}, la pobreza tiene efectos significativos, perjudiciales y de largo alcance  en  el  desarrollo  infantil.   Es  por  esto que  a  lo  largo  de  la  historia  se  han  creado  programas  de \textit{transferencias de efectivo} con el fin de apoyar el desarrollo infantil y adolescente. En su desarrollo histórico los programas pioneros de \textit{TMC} empezaron principalmente en México y en Brasil en el año 1997 y posteriormente dichos programas de \textit{TMC} se han extendido a otros países de América Latina y, recientemente, a otros países en vías de desarrollo de otras regiones.
     
-Según Sugiyama (2011) el fundamento económico de los programas de transferencias condicionadas (CT) es que pueden ser una forma equitativa y eficiente de abordar las fallas del mercado y llegar a las poblaciones más vulnerables (Fiszbein et al., 2009). Así bien, como se sabe en la literatura, los programas de transferencias monetarias condicionadas están enfocados principalmente a que los estudiantes cumplan un requisito mínimo de asistencia a un programa escolar. No  obstante,  existen  otros  programas  de  transferencias  monetarias  condicionadas mucho  más amplios, que no solo tiene como exigencia asistir regularmente a un programa educativo si no también a cumplir cierta asistencia en chequeos de salud, entre otros.
-
- Este tipo de intervenciones estatales que se centran en invertir en las necesidades básicas de capital humano pueden ejercer un efecto dominó a más largo plazo en el desarrollo de los niños (Ozer et al 2009). Por otra parte, los programas de transferencias condicionadas son efectivos para aumentar la matrícula y la asistencia escolar, sin embargo estos efectos ayudaron a su vez a la disminución de embarazos adolescentes pues ayudaba a evitar la actividad sexual (Baird et al. 2010)
+Según \cite{Sugiyama2011TheAmericas} el fundamento económico de los programas de \textit{transferencias condicionadas (CT)} es que pueden ser una forma equitativa y eficiente de abordar las fallas del mercado y llegar a las poblaciones más vulnerables \citep{Fiszbein2009ConditionalReport}. Así bien, como se sabe en la literatura, los programas de transferencias monetarias condicionadas están enfocados principalmente a que los estudiantes cumplan un requisito mínimo de asistencia a un programa escolar. No  obstante,  existen  otros  programas  de  transferencias  monetarias  condicionadas mucho  más amplios, que no solo tiene como exigencia asistir regularmente a un programa educativo si no también a cumplir cierta asistencia en chequeos de salud, entre otros.
      
-En Colombia, el Programa Familias en Acción (FA) se diseñó y puso en marcha como una respuesta a los efectos de la crisis económica de finales de los años 1990, con el propósito de proteger y promover la formación de capital humano en las familias en extrema pobreza, a través del otorgamiento de subsidios condicionados a la asistencia escolar y al desarrollo de acciones de cuidado de la salud y la nutrición en poblaciones menores de 18 años pertenecientes a los hogares del nivel 1 del Sisben (Acción Social; DNP, 2016). Según datos del DNP (2016) el Programa ha demostrado tener un impacto importante en el cuidado de la salud, el consumo alimenticio, el crecimiento y desarrollo y el estado nutricional de los niños menores de 5 años en las zonas rurales; así como en el aumento de la asistencia escolar de los jóvenes entre los 12 y años de las zonas urbanas, convirtiéndose en un elemento importante en la estrategia de protección social.
-     
-El programa de Familias en Acción  se ha convertido no solo en uno de los programas sociales más evaluados en la historia reciente de Colombia, sino también uno de los cuáles más gasto público ha recibido. Además, el programa ha logrado beneficiar a un promedio de más de 1.600.000 familias anualmente, desde el 2001 hasta el 2017 (Robles and Urrutia, 2018).
-    
-Según el Banco Interamericano de Desarrollo – BID – (2015) los programas de transferencias monetarias condicionadas son usadas como políticas efectivas en la reducción de la pobreza y el aumento de la calidad educativa de la población de bajos recursos, en especial en los países en vía de desarrollo. Es por esto y las demás ideas planteadas que se decide en este texto realizar una investigación que tenga como objetivo evaluar el impacto real del programa Familias en acción en el acceso a la educación escolar en el rango de 6-17 años entre el 2011 y el 2016.
+En Colombia, el Programa Familias en Acción (FA) se diseñó y puso en marcha como una respuesta a los efectos de la crisis económica de finales de los años 1990, con el propósito de proteger y promover la formación de capital humano en las familias en extrema pobreza, a través del otorgamiento de subsidios condicionados a la asistencia escolar y al desarrollo de acciones de cuidado de la salud y la nutrición en poblaciones menores de 18 años \citep{Robles2018Las2001-2018}. 
 
-Para ello el presente articulo se divididera en seis secciones:en la primera se resumirá la literatura relacionada con los programas de transferencia condicionadas, más específicamente los relacionados con el programa de Familia en Acción; segundo se presentara la intervención y el contexto que dan sentido al objetivo del trabajo; tercero hablaremos de los datos, tanto del origen como de la transformaciones hechas a la base de datos; cuarto, se presentara la metodología; quinto se hablaran de los principales resultados; sexto, se concluirá.
-      
+Para ver la efectividad del programa se decidió identificar el impacto de éste en el acceso a la educación para los niños y jóvenes entre los 6 y 17 años. Utilizando las bases de datos del Sisbén III, facilitada por la Dirección Nacional de Planeación, que consistían en una muestra tipo panel con información de inscritos en el Sisbén entre el año 2011 y 2016, se identifico el impacto que tiene la regla institucional de un puntaje de Sisbén por debajo de $30.56$ como mecanismo de asignación al programa Familias en Acción en el acceso a la educación por parte e los niños y jóvenes entre los 6 y 17 años de edad. La razón para no medir directamente el impacto del programa familias en acción en el acceso a la educación y en lugar usar el puntaje de asignación al programa vía puntaje del Sisbén se debe a razones metodológicas relacionadas con la base de datos empleada como se mencionará más adelante en más detalle. 
 
-% Raul y Juliana
+Para realizar la identificación del impacto causal se usa un diseño de investigación basado en la ecuación asociada a la forma reducida de un Fuzzy RDD, dónde se usa como instrumento el puntaje de asignación al programa basado en el Sisbén. Se encontró que efectivamente la regla institucional de asignación a familias en acción mediante el puntaje del Sisbén si tiene un efecto causal sobre la accesisibilidad a la educación para las personas en el rango de edad mencionando aumentando el acceso a la educación en un 5 \% en relación a la media para el rango de edad completo y en un 7 \% en relación a la media cuando se realizó la estimación de manera desagregada para los niños entre 6 a 11 años. Para los adolescentes entre 12 a 17 años no se encontró impacto significativo a la hora de hacer la estimación con este grupo de manera desagregada. 
+
+Se destaca que el impacto causal identificado confirma y refuerza los resultados obtenidos en la literatura y en otros trabajos empíricos de que los programas de transferencias monetarais condicionadas han sido políticas públicas efectivas en incentivar la asistencias escolar en los países latinoaméricanos y otros países en vías de desarrollo. La magnitud del impacto identificado, también da una sugerencia de posibles formas de aumentar la efectividad del programa como lo son complementarlo con programas que subsidien la oferta o buscando otros mecanismos de focalización distintos al sisbén. 
+
+El artículo procede de la siguiente forma. La Sección II provee un Estado del arte de como se ha abordado las TMCs en general y el programa de familias en acción en particular. La sección III mira la justificación de la intervención de Familias en acción y el contexto detrás de él en Colombia. La Sección IV presenta los datos utilizados y las modificaciones necesarias para poder realizar las estimaciones. La Sección V presente el diseño de investigación empleado para realizar las estimaciones mientras que la sección VI muestra los principales resultados al emplear el diseño de investigación en la base de datos utilizada. Finalmente, la sección VII concluye. 
+
 \section{Estado del arte}
 
 En su desarrollo histórico los programas pioneros de TMC empezaron principalmente en México y en Brasil en el año 1997, posteriormente las TMC se han extendido a países de América Latina y más allá, según \cite{Sugiyama2011TheAmericas}. El programa pionero Progresa en México empezó con aproximadamente 30.000 familias y hoy cubre a 5 millones de familias. Según \cite{Schultz2004SchoolProgram} este es un programa que evalúa el impacto del programa en la matrícula de los niños más pobres de las zonas rurales de México. También muestra cómo este programa no solo tuvo efectos a corto plazo en esta población, sino el efecto positivo en la escolaridad de por vida del individuo. Para el año 2017, el programa federal Bolsa Família, programa heredero del programa Bolsa Escola que fue el otro programa pionero en TMCs, atiende a 11 millones de familias (46 millones de personas) \citep{Fiszbein2009ConditionalReport}. Ya en el 2008, virtualmente casi todo los países latinoamericanos tenían alguna especie de transferencia condicionada. En otras partes del mundo, Bangladesh, Indoneisa y Turquía se han caracterizado por tener programas de TMCs de gran escala, mientras que Cambodia, Malawi, Marocco, Pakistan y Sudafrica para ese mismo año adoptaron programas pilotos sobre TMSs \citep{Fiszbein2009ConditionalReport}.
@@ -107,8 +104,6 @@ Las evaluaciones de impacto también demuestran que en las zonas rurales el prog
 
 \cite{PulidoBuitrago2013LosAccion} con el propósito de recelar los efectos políticos y sociales que ha generado el programa Familias en Acción en los beneficiarios y en su relación con el Estado, examinó el surgimiento y la consolidación de los programas de (TMC) en América Latina desde mediados de los noventa como principales estrategias de la ‘lucha contra la pobreza’.
 
-
-% Raul y Juliana
 \section{Intervención y contexto}
 
 En la década de los 90, Colombia paso por una gran crisis económica que afecto el consumo de los hogares al afectar sus ingresos, lo cual trajo como consecuencia una menor asistencia de los niños y jóvenes a los centros escolares. A raíz de eso el gobierno nacional mediante el Departamento Nacional de Planeación (DNP) implemento una política para velar por la educación de la población joven, el cual hoy se conoce como Familias en Acción.
@@ -160,7 +155,7 @@ Puntaje del Sisbén III                                                         
 
 \section{Metodología}
 
-Dado que existe una regla institucional bien establecida que indica que las personas que cuentan con un puntaje de sisbén por encima de $30.56$ están inhabilitadas a \textit{acceder al programa familias en acción} mientras que las personas con puntaje menor pueden ser posibles beneficiarios del programa se tiene que si uno se concentra alrededor del umbral que separa ambos grupos, es decir $30.56$, se tendría una especie de experimento natural alrededor de dicho umbral donde la asignación al tratamiento, en este caso pertenecer o no pertenecer a familias en acción, se puede ver como una asignación aleatorizada o una loteria alrededor del umbral. Este es el caso, porque algunas personas por poco superaron por poco el umbral de asignación $30.56$ mientras que otras personas por poco no lo superaron sin que estás personas tengan control directo sobre dicha asignación\footnote{Sobre esta última afirmación relacionada con no manipulación por parte de los individuos se hablará un poco más en la sección de resultados.}
+Dado que existe una regla institucional bien establecida que indica que las personas que cuentan con un puntaje de Sisbén por encima de $30.56$ están inhabilitadas a \textit{acceder al programa familias en acción} mientras que las personas con puntaje menor pueden ser posibles beneficiarios del programa se tiene que si uno se concentra alrededor del umbral que separa ambos grupos, es decir $30.56$, se tendría una especie de experimento natural alrededor de dicho umbral donde la asignación al tratamiento, en este caso pertenecer o no pertenecer a familias en acción, se puede ver como una asignación aleatorizada o una loteria alrededor del umbral. Este es el caso, porque algunas personas por poco superaron el umbral de asignación $30.56$ mientras que otras personas por poco no lo superaron sin que estás personas tengan control directo sobre dicha asignación\footnote{Sobre esta última afirmación relacionada con no manipulación por parte de los individuos se hablará un poco más en la sección de resultados.}
 
 \subsection{Fuzzy RDD}
 
@@ -206,10 +201,10 @@ Dado los cuatro mecanismos existentes de asignación a familias en acción y dad
 
 La no manipulación por parte de los individuos alrededor del umbral está garantizada tanto por el contexto institucinal como por los resultados estadísticos. Del contexto institucional, a la hora de asignar el puntaje del Sisbén a cada individuo el DNP lo hace con una \textit{fórmula secreta o al menos desconocida} para los posibles beneficiarios y luego de que éstos son entrevistados por lo que es muy improbable que haya manipulación del puntaje de éstos alrededor del umbral de asignación a familias en acción por medio de dicho puntaje. 
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
-    \includegraphics[width = 0.9 \textwidth]{imagenes/estimax_principal/histrograma_puntaje_sisben.png}
-    \caption{El histograma claramente muestra que no hay manipulación por parte de los individuos alrededor del umbral $30.56$ dado la continuidad de la variable puntaje del sisbén 3 alrededor de dicho umbral. La línea vertical roja denota el puntaje de asignación a familias en acción vía puntaje del sisbén. }
+    \includegraphics[scale = 0.35]{imagenes/estimax_principal/histrograma_puntaje_sisben.png}
+    \caption{El histograma claramente muestra que no hay manipulación por parte de los individuos alrededor del umbral $30.56$ dado la continuidad de la variable puntaje del sisbén 3 alrededor de dicho umbral. La línea vertical roja denota el puntaje de asignación a familias en acción vía puntaje del sisbén.}
     \label{fig:histog_completa}
 \end{figure}
 
@@ -217,14 +212,14 @@ Frente a la evidencia estadística de no manipulación, se observa de la figura 
 
 Esto se complementa con el \textit{test de McCrary} en donde se obtuvo un p-valor de 0.5232 por lo que claramente no se rechaza la hipótesis nula de no manipulación. Lo anterior, se corrobora gráficamente por la continuidad de la gráfica asociada al test de McCrary dada por la figura \ref{fig:mccrary_complete}. 
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
-    \includegraphics[width = 0.9\textwidth]{imagenes/estimax_principal/mccrary_principal.png}
+    \includegraphics[scale = 0.35]{imagenes/estimax_principal/mccrary_principal.png}
     \caption{Gráfica asociada al Test de McCrary para la estimación principal}
     \label{fig:mccrary_complete}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[h!]
 \centering
 \begin{tabular}{lccc}
 \hline
@@ -242,23 +237,21 @@ Número de observaciones & 22286                                                
 
 Frente a la continuidad de las covariadas, las gráficas \ref{fig:sexo}, \ref{fig:embarazada} y \ref{fig:percibe_ingreso} muestran evidencia gráfica de la continuidad de dichas variables alrededor del umbral. De igual forma, al aplicar un \textit{diseño de regresión lineal local discontinuo} usando cada covariada como variable dependiente y usando el puntaje del sisbén como running variable, basando la estimación en un diseño con kernel rectangular y con un ancho de banda igual a 1, se obtiene los resultados que se presentan en la tabla \ref{tab:cov_main}. Como se puede observar, no hay evidencia estadística de salto alrededor del umbral\footnote{Esto se concluye de la no significancia del impacto}. 
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[scale = 0.35]{imagenes/estimax_principal/sexo_main.png}
     \caption{Continuidad de la \textit{covariada sexo} alrededor del umbral}
     \label{fig:sexo}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[scale = 0.35]{imagenes/estimax_principal/embarzada_main.png}
     \caption{Continuidad de la \textit{covariada embarazada} alrededor del umbral}
     \label{fig:embarazada}
 \end{figure}
 
-\clearpage
-
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[scale = 0.35]{imagenes/estimax_principal/percibe_ingreso_main.png}
     \caption{Continuidad de la \textit{covariada percibe ingreso} alrededor del umbral}
@@ -269,7 +262,7 @@ Por los resultados anteriores, se observa que los dos supuestos de identificaci�
 
 Realizando un \textit{diseño de regresión lineal local discontinuo} con \textit{kernel uniforme} y \textit{ancho de banda} igual a 1 se estima la ecuación asociada a la forma reducida \ref{eq:reduced_form}. Los resultados se presentan en la tabla \ref{tab:estimaxs_principales} y el resultado gráfico del impacto se puede observar en la figura \ref{fig:main_estimax_interes}. 
 
-\begin{table}[h]
+\begin{table}[h!]
 \centering
 \begin{tabular}{lcc}
 \hline
@@ -285,38 +278,79 @@ Número de observaciones & 22286                                                
 \label{tab:estimaxs_principales}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
-    \includegraphics[scale = 0.3]{imagenes/estimax_principal/main_estimax_interes.png}
+    \includegraphics[scale = 0.35]{imagenes/estimax_principal/main_estimax_interes.png}
     \caption{Discontinuidad de la \textit{variable Estudio el último mes (EUM)} alrededor del umbral. El salto representa le estimación del impacto.}
     \label{fig:main_estimax_interes}
 \end{figure}
 
 % Intepretación de los resultados
 
-De la tabla \ref{tab:estimaxs_principales} 
+De la tabla \ref{tab:estimaxs_principales} se concluye que la regla institucional de asignación por puntaje de Sisbén a Familias en Acción en el umbral de $30.56$ puntos si tiene un efecto en el acceso a un centro educativo por parte de los niños y jóvenes entre los 6 a 17 años en donde las persona que se encuentran al lado izquierdo del umbral, y por ende pueden ser posibles beneficiarios del programa vía puntaje del Sisbén, tienen una mayor asistencia a un centro educativo que los que se encuentran al lado derecho del umbral como lo muestran los resultados de las estimaciones de la ecuación \ref{eq:reduced_form}. El impacto estimado correspondiente a \ref{eq:impacto} fue de una disminución 3 \% en el acceso a la educación cuando las personas pasan de un nivel un poco más abajo al umbral institucional $30.56$ a estar un poco más arriba del umbral en su puntaje del sisbén cuando la regresión se hizo sin covariadas y del 4 \% cuando la regresión se hizo con covariadas. Ahora, si se miran dichos impactos respecto a la media de la variable $EUM$, se encuentra un efecto relativo de 4 \% y de 5 \%  sin y con covariadas respectivamente. Estos resultados corroboran que, usando como instrumento el umbral del puntaje del sisbén en $30.56$ familias en acción si tiene un impacto sobre el acceso a la educación por parte de los niños y jóvenes beneficiados, uno de los principales objetivos de la política. 
 
 % Mencionar lo de inferencia randomizada y placebo
 Finalmente, cómo análisis de robustes se decidió realizar inferencia randomizada para calcular el p-valor asociado a la regresión principal, es decir, el p-valor asociado al impacto que tiene el instrumento o la condición de estar por debajo del umbral\footnote{Recordar que el valor de dicho umbral es $30.56$} del puntaje del sisbén para poder acceder a familias en acción sobre el acceso a la educación. Adicionalmente, se decidió realizar dos experimentos placebos en dónde se utilizaban valores de corte o umbral arbitrarios, uno arriba y otro debajo del umbral institucional, con la finalidad de ver si la metodología empleada era robusta a cambios de umbral. Los resultados de lo anterior, se encuentran en el anexo. 
 
 \subsection{Estimaciones auxiliares}
 
-Para complementar la estimación principal, se decidió desagregar las observaciones en los dos grupos poblaciones principales, es decir, un un grupo \textit{g1} que consistía principalmente en niños entre los 6 y 11 años y en un grupo \textit{g2} que consistía principalmente en niños entre los 12 y 17 años y se realizaron las estimaciones con cada grupo. La idea de lo anterior, era ver si existía en efecto diferenciado del umbral sobre el acceso a la educación entre los dos grupos poblacionales mencionados. Los resultados que validan los supuestos para el uso del RDD se encuentran en el anexo. 
+Para complementar la estimación principal, se decidió desagregar las observaciones en los dos grupos poblaciones principales, es decir, un un grupo \textit{g1} que consistía principalmente en niños entre los 6 y 11 años y en un grupo \textit{g2} que consistía principalmente en adolescentes entre los 12 y 17 años y se realizaron las estimaciones con cada grupo. La idea de lo anterior, era ver si existía un efecto diferenciado del umbral institucional sobre el acceso a la educación entre los dos grupos poblacionales mencionados. Los resultados que validan los supuestos para el uso del RDD se encuentran en el anexo. 
 
-Los resultados para una \textit{diseño de regresión lineal local discontinuo} con \textit{kernel uniforme} y \textit{ancho de banda} igual a 1 para estimar la ecuación asociada a la forma reducida \ref{eq:reduced_form} para cada uno de los grupos poblaciones mencionados se encuentran en la tabla   y la evidencia visual en las gráficas   .
+Los resultados para una \textit{diseño de regresión lineal local discontinuo} con \textit{kernel uniforme} y \textit{ancho de banda} igual a 1 para estimar la ecuación asociada a la forma reducida \ref{eq:reduced_form} para cada uno de los grupos poblaciones mencionados se encuentran en la tabla \ref{tab:reg_main_grupos} y la evidencia visual de la discontinuidad y no discontinuidad alrededor del umbral en el accesos a la educación para el grupo g1 y para el grupo g2 en las gráficas \ref{fig:estimax_main_g1} y \ref{fig:estimax_main_g2} respectivamente.
 
+\begin{table}[h!]
+\begin{tabular}{lcccc}
+\hline
+\hline
+\multicolumn{1}{c}{}    & \multicolumn{2}{c}{\begin{tabular}[c]{@{}c@{}}Estimaciones para el grupo de \\ niños entre 6 a 11 años\end{tabular}}                          & \multicolumn{2}{c}{\begin{tabular}[c]{@{}c@{}}Estimaciones para el grupo de \\ adolescentes entre 12 a 17 años\end{tabular}}                  \\ \cline{2-5} 
+Características         & \begin{tabular}[c]{@{}c@{}}Estudio el \\ útimo mes\\ (1)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Estudio el \\ útimo mes\\ (2)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Estudio el \\ útimo mes\\ (3)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Estudio el \\ útimo mes\\ (4)\end{tabular} \\ \hline
+Impacto                 & \begin{tabular}[c]{@{}c@{}}-0.058*\\ (0.098)\end{tabular}             & \begin{tabular}[c]{@{}c@{}}-0.059*\\ (0.092)\end{tabular}             & \begin{tabular}[c]{@{}c@{}}0.007\\ (0.189)\end{tabular}               & \begin{tabular}[c]{@{}c@{}}0.000\\ (0.182)\end{tabular}               \\
+Media                   & 0.81                                                                  & 0.81                                                                  & 0.73                                                                  & 0.73                                                                  \\
+Controles               & No                                                                    & Sí                                                                    & No                                                                    & Sí                                                                    \\
+Número de observaciones & 11683                                                                 & 11683                                                                 & 10603                                                                 & 10603                                                                 \\ \hline
+\end{tabular}
+\caption{Esta tabla contiene las regresiones lineales locales discontinuas usando la variable $EUM$ como variable dependiente en función del puntaje del sisbén para los grupos g1 y g2. Como se observa, en el umbral $30.56$ el efecto del salto es significativo para el grupo 1, por lo que existe una discontinuidad alrededor del umbral causada por encontrarse por encima o debajo del umbral. No obstante, se encontró que de manera desagregada no hay impacto significativo para el grupo 2. Para las estimaciones con controlos, los controles empleados fueron las covariadas: \textit{sexo}, \textit{embarazada} y \textit{percibe ingresos}. En paréntesis se encuentran los valores de los p-valores. Adicionalmente, se utilizó un tipo de \textit{bootstrapping} para el cálculo de los errores robustos utilizados en el cálculo de los p-valores.* denota significancia del 10 \%}
+\label{tab:reg_main_grupos}
+\end{table}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale = 0.35]{imagenes/estimaxs_adicionales/g1_estimax.png}
+    \caption{Discontinuidad de la \textit{variable Estudio el último mes (EUM)} alrededor del umbral para la estimación con solo el grupo g1. El salto representa le estimación del impacto.}
+    \label{fig:estimax_main_g1}
+\end{figure}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale = 0.35]{imagenes/estimaxs_adicionales/g2_estimax.png}
+    \caption{Continuidad de la \textit{variable Estudio el último mes (EUM)} alrededor del umbral para la estimación con solo el grupo g2. Por tanto, para este grupo desagregado no hay impacto significativo del umbral institucional en el acceso a la educación.}
+    \label{fig:estimax_main_g2}
+\end{figure}
+
+% Interprtaciones de los resultados 
+
+De la tabla \ref{tab:estimaxs_principales} se concluye que la regla institucional de asignación por puntaje de Sisbén a Familias en Acción en el umbral de $30.56$ puntos si tiene un efecto en el acceso a un centro educativo por parte de los niños con edades entre 6 a 12 años en donde las persona que se encuentran al lado izquierdo del umbral, y por ende pueden ser posibles beneficiarios del programa vía puntaje del Sisbén, tienen una mayor asistencia a un centro educativo que los que se encuentran al lado derecho del umbral como lo muestran los resultados de las estimaciones de la ecuación \ref{eq:reduced_form}. El impacto estimado correspondiente a \ref{eq:impacto} fue de una disminución del 6 \% en el acceso a la educación cuando las personas pasan de un nivel un poco más abajo al umbral institucional $30.56$ a estar un poco más arriba del umbral en su puntaje del sisbén cuando la regresión se hizo sin covariadas y también del 6 \% cuando la regresión se hizo con covariadas. Ahora, si se miran dichos impactos respecto a la media de la variable $EUM$, se encuentra un efecto relativo de 7 \%   sin y con covariadas respectivamente. Estos resultados corroboran que, usando como instrumento el umbral del puntaje del sisbén en $30.56$ familias en acción si tiene un impacto sobre el acceso a la educación por parte de los niños y jóvenes beneficiados en la primera infancia, uno de los principales objetivos de la política. 
+
+Lo interesante, fueron los resultados obtenidos respecto al grupo 2 que cuenta con los adolescentes con edades entre 12 a 17 años. Como lo muestran tanto la tabla \ref{tab:reg_main_grupos} y la gráfica \ref{fig:estimax_main_g2} no existe o al menos no fue posible identificar un efecto significativo del umbral institucional sobre el acceso a la educación por parte de los miembros de éste subgrupo. Existen múltiples razones que explican porque no fue posible encontrar un efecto significativo del umbral en el acceso a la educación por parte de los jóvenes en este rango de edad. La principal razón, a juicio de los autores, consiste en que los individuos alrededor del umbral tiene características en términos socio-económicas y de ingreso muy parecidas por lo que a edades mayores a los 12 años el subsidiado otorgado por familias en acción puede no ser ya un incentivo monetario lo suficientemente fuerte para seguir yendo al colegio. Pero existes otras posibles justificaciones a la no significancia del efecto en este grupo, entre otras, a que a mayor edad existe mayor presión sobre los adolescentes a dejar de estudiar y a conseguir un empleo para ayudar en los ingresos de la familia o simplemente porque los adolescentes sienten que a corto plazo es más provechoso ingreso al mercado laboral, ya sea formal o informal, y conseguir ingresos en lugar de seguir estudiando. 
 
 % Raul, juliana y german
 \section{Conclusiones}
 
+Según los resultados mostrados por la literatura y los estudios empíricos, las \textit{transferencias monetarias condicionadas} han sido en general programas efectivos a la hora de aliviar la pobreza de un significativo número de hogares y a incentivar el acceso a la educación y el cuidado de salud de comunidades e individuos marginados en los diferentes países donde se han aplicado y en particular en los países latinoamericanos. 
 
+Los resultados aquí obtenidos, están en la misma dirección que los hallazgos empíricos mostrados por literatura sobre la efectividad e impacto que tienen las TMCs y que dichos impactos sí son significativos, y sobre todo medibles de manera cuantitativa. En particular, se encuentra que existe un impacto de la regla institucional de asignación a familias en acción a partir del puntaje del sisbén de $30.56$ sobre la accesibilidad a la educación y en particular se identificó un impacto causal de 5 \% en relación a a la media para los niños y adolescentes entre los 6 y 17 años. Por ende, el estudio muestra que efectivamente los TMCs, al menos la principal en Colombia, si ha sido una política pública que ha ayudado a incentivar el acceso a la educación y por ende la formación de capital humano. 
 
 %% Agregar una sección de como estudios futuros pueden mejorar los estudios encontrados en el presente análisis. Dos formas (Dadas las fuertes limitaciones en los datos): 
 
-%%%% Hacer un fuzzy RDD 
-%%%% Obtener más información del programa de tal forma de poder hacer estimaciones desagregadadas por regiones sin poder mucho poder estadístico. Es decir, trabajar con un panel más completo
+No obstante, se invita a futuros investigadores y diseñadores de política pública aplicada que sientan útil los hallazgos encontrados acá que extiendan un poco más los resultados obtenidos. En particular, y dado que el sisbén no es el único mecánismo de asignación, una forma de extener el trabajó realizado sería realizar estimaciones con una base de datos que claramente identifique que individuos hacen parte de Familias en Acción y que individuos no lo hacen para así lograr realizar la estimación mediante un diseño de investigación de \textit{fuzzy RDD} completo y no limitarse a los resultados que de el instrumetno al estimar solamente la \textit{forma reducida} del fuzzy RDD como se hizó en el presente trabajo. De esta forma, empelando un fuzzy RDD, con la base de datos adecuada, es posible identificar el impacto causal y directo que tiene Familias en acción en el acceso a la educación. 
+
+De igual forma, de obtenerse un panel más completo, en el sentido de tener más observaciones por año y más años de referencia, en lugar de solamente dos años, se podría obtener estimaciones desagregados del impacto del impacto del programa en las diferentes regiones del país. En el presente trabajo ello fue imposible dado que no se contaba con la cantidad de datos suficiente por regiones para poder realizar estimaciones con alto poder estadístico. Otra dificultad que se obtuvo acá, fue que no se pudo aislar el efecto de los centros urbanos, dónde se espera que el programa sea menos efectivo, por la misma razón que al filtrar la base de datos para eliminar esas observaciones se pierde mucho poder estadístico en las estimaciones.
+
+% mencionar que no solo es necesario subsidiar la demanda sino también es necesario subsidiar la oferta
+
+% sugerir otros mecanismos de focalización alternativos al sisbén para obtener impactos más significativos
+
+Finalmente, hay cosas que quedan aún por hacer para mejorar la efectividad del programa. En primer lugar, y como lo sugiere \cite{Robles2018Las2001-2018}, es necesario no solo subsidiar la demanda sino también es necesario subsidiar la oferta de tal forma que no solo basta dar subsidios para que las personas puedan estudiar sino también es importante ofrecer más centros educativos y mejorar las instalaciones de los que actualmente existen,de esta forma se podría observar efectos mayores a los que se identificaron en el presente trabajo. De igual forma, otra forma de mejorar la efectividad de familias en acción es mediante la implementación de mecanismos de focalización alternativos al sisen para poder identificar familias que puedan beneficiarse aún más del programa y obtener impactos causales en el acceso a la educación mayores a los obtenidos en el presente artículo.
 
 \clearpage
 
@@ -335,7 +369,7 @@ Otro análisis de robustes, ahora para evaluar la calidad de la metodología emp
 
 En el primer experimento placebo, se escoge un umbral de puntaje de sisbén igual a $15$ y se realiza un \textit{diseño de regresión lineal local discontinuo} para la ecuación \ref{eq:reduced_form} usando un kernel uniformo y un ancho de banda igual a 1 mientras que en el segundo experimento placebo se escoge un umbral de puntaje de sisbén igual a $45$ utilizando la misma metodología\footnote{Ambas estimaciones se realizan sin covariadas adicionales}.
 
-\begin{table}[h]
+\begin{table}[h!]
 \begin{tabular}{lcc}
 \hline
 \hline
@@ -352,31 +386,97 @@ Número de observaciones & 22286                                                
 
 Como muestra la tabla de resultados \ref{tab:placebo}, claramente los impactos no son significativos cuándo se introducen umbrales placebos arbitrarios lo que da mayor robustez al procedimiento empleado para la identificación del impacto causal \ref{eq:impacto}. Adicionalmente, las gráficas \ref{fig:placebo1} y \ref{fig:placebo2} muestran que hay continuidad alrededor de los umbrales placebos escogidos arbitrariamente lo que reafirma los resultados de la tabla \ref{tab:placebo}.
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[scale = 0.35]{imagenes/estimax_principal/placebo1_main.png}
-    \caption{Caption}
+    \caption{Continuidad de la \textit{variable Estudio el último mes (EUM)} alrededor del umbral placebo puntaje del Sisbén$15$.}
     \label{fig:placebo1}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[scale = 0.35]{imagenes/estimax_principal/placebo2_main.png}
-    \caption{Caption}
+    \caption{Continuidad de la \textit{variable Estudio el último mes (EUM)} alrededor del umbral placebo puntaje del Sisbén$45$.}
     \label{fig:placebo2}
 \end{figure}
 
 \subsection{Validación de supuestos para las regresiones auxiliares}
 
+A continuación se muestran los resultado que garantizan el cumplimiento de los supuestos de: 1) no manipulación alrededor del umbral y 2) continuidad de las covariada alrededor del umbral, para los grupos poblaciones desagregados: g1) niños entre 6 a 11 años y g2) adolescentes entre 12 a 17 años. 
+
 \subsubsection{Grupo poblacional 1: Niños entre 6 a 11 años}
 
+El grupo poblacional g1 no muestra manipulación alrededor del umbral como lo muestra el resultado de un \textit{test de McCrary} en donde se rechaza la hipótesis nula de no manipulación con p-valor de $0.293$. De igual forma, tanto el histograma \ref{fig:hist_g1} como la visualización gráfica de la prueba McCrary \ref{fig:mccrary_g1} muestran que no hay manipulación por parte de este grupo alrededor del umbral. 
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale = 0.35]{imagenes/estimaxs_adicionales/histograma_g1.png}
+    \caption{El histograma claramente muestra que no hay manipulación por parte del grupo poblacional que conforma g1 alrededor del umbral $30.56$ dado la continuidad de la variable puntaje del sisbén 3 alrededor de dicho umbral. La línea vertical roja denota el puntaje de asignación a familias en acción vía puntaje del sisbén.}
+    \label{fig:hist_g1}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale = 0.35]{imagenes/estimaxs_adicionales/mccrary_g1.png}
+    \caption{Gráfica asociada al Test de McCrary para la estimación principal con solo el grupo g1}
+    \label{fig:mccrary_g1}
+\end{figure}
+
+De igual forma, no hay evidencia de discontinuidad en las covariadas \textit{sexo}, \textit{embarazada} y \textit{percibe ingreso} cuando se hacen las estimaciones correspondientes con solo el grupo g1 por lo que concluye que no hay explicaciones plausibles alternativas por parte de las covariadas manejadas sobre el efecto del umbral institucional. Los resultados de esta no significancia se encuentran en la tabla \ref{tab:cov_g1}. 
+
+\begin{table}[h!]
+\begin{tabular}{lccc}
+\hline
+\hline
+\multicolumn{1}{c}{}    & \multicolumn{3}{c}{Covariadas}                                                                                                                                                      \\ \cline{2-4} 
+Características g1      & \begin{tabular}[c]{@{}c@{}}Sexo\\ (1)\end{tabular}       & \begin{tabular}[c]{@{}c@{}}Embarazada\\ (2)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Percibe Ingreso\\ (3)\end{tabular} \\ \hline
+Impacto                 & \begin{tabular}[c]{@{}c@{}}-0.011\\ (0.506)\end{tabular} & \begin{tabular}[c]{@{}c@{}}-0.002\\ (0.320)\end{tabular} & \begin{tabular}[c]{@{}c@{}}-0.078\\ (0.611)\end{tabular}      \\
+Media                   & 0.51                                                     & 0                                                        & 0.06                                                          \\
+Controles               & No                                                       & No                                                       & No                                                            \\
+Número de observaciones & 11683                                                    & 11683                                                    & 11683 \\ \hline                                                        
+\end{tabular}
+\caption{Esta tabla contiene las regresiones lineales locales discontinuas usando cada una de las covaridas como variables dependientes en función del puntaje del sisbén para el grupo g1. Como se observa, en el umbral $30.56$ el efecto del salto no es significativo. En paréntisis se encuentran los valores de los p-valores.}
+\label{tab:cov_g1}
+\end{table}
 
 \subsubsection{Grupo poblacional 2: Adolescentes entre 12 a 17 años}
 
+El grupo poblacional g2 no muestra manipulación alrededor del umbral como lo muestra el resultado de un \textit{test de McCrary} en donde se rechaza la hipótesis nula de no manipulación con p-valor de $0.30$. De igual forma, tanto el histograma \ref{fig:hist_g2} como la visualización gráfica de la prueba McCrary \ref{fig:mccrary_g2} muestran que no hay manipulación por parte de este grupo alrededor del umbral. 
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale = 0.35]{imagenes/estimaxs_adicionales/histograma_g2.png}
+    \caption{El histograma claramente muestra que no hay manipulación por parte del grupo poblacional que conforma g2 alrededor del umbral $30.56$ dado la continuidad de la variable puntaje del sisbén 3 alrededor de dicho umbral. La línea vertical roja denota el puntaje de asignación a familias en acción vía puntaje del sisbén.}
+    \label{fig:hist_g2}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale = 0.35]{imagenes/estimaxs_adicionales/mccrary_g2.png}
+    \caption{Gráfica asociada al Test de McCrary para la estimación principal con solo el grupo g2}
+    \label{fig:mccrary_g2}
+\end{figure}
 
 \newpage
+
+De igual forma, no hay evidencia de discontinuidad en las covariadas \textit{sexo}, \textit{embarazada} y \textit{percibe ingreso} cuando se hacen las estimaciones correspondientes con solo el grupo g2 por lo que concluye que no hay explicaciones plausibles alternativas por parte de las covariadas manejadas sobre el efecto del umbral institucional. Los resultados de esta no significancia se encuentran en la tabla \ref{tab:cov_g2}. 
+
+\begin{table}[h!]
+\begin{tabular}{lccc}
+\hline
+\hline
+\multicolumn{1}{c}{}    & \multicolumn{3}{c}{Covariadas}                                                                                                                                                      \\ \cline{2-4} 
+Características g2      & \begin{tabular}[c]{@{}c@{}}Sexo\\ (1)\end{tabular}       & \begin{tabular}[c]{@{}c@{}}Embarazada\\ (2)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Percibe Ingreso\\ (3)\end{tabular} \\ \hline
+Impacto                 & \begin{tabular}[c]{@{}c@{}}0.117 \\ (0.883)\end{tabular} & \begin{tabular}[c]{@{}c@{}}-0.057\\ (0.514)\end{tabular} & \begin{tabular}[c]{@{}c@{}}-0.018\\ (0.244)\end{tabular}      \\
+Media                   & 0.52                                                     & 0.052                                                        & 0.082                                                          \\
+Controles               & No                                                       & No                                                       & No                                                            \\
+Número de observaciones & 10603                                                    & 10603                                                    & 10603 \\ \hline                                                        
+\end{tabular}
+\caption{Esta tabla contiene las regresiones lineales locales discontinuas usando cada una de las covaridas como variables dependientes en función del puntaje del sisbén para el grupo g2. Como se observa, en el umbral $30.56$ el efecto del salto no es significativo. En paréntisis se encuentran los valores de los p-valores.}
+\label{tab:cov_g2}
+\end{table}
+
+\clearpage
 
 \bibliography{references.bib}
 
