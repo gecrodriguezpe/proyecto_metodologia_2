@@ -201,12 +201,12 @@ placebo1_reg = rdrobust(general$estudio_ult_mes, general$puntaje_sisben_3, c = p
 placebo_cutoff2 = 45
 bandwidth_placebo2 = 1
 
-### Gráfica placebo1 sin intervalos de confianza
+### Gráfica placebo2 sin intervalos de confianza
 placebo2_plot = rdplot(general$estudio_ult_mes, general$puntaje_sisben_3,  
                        c = placebo_cutoff2, kernel = "uniform", h = 3, p = 1, x.lim = c(43, 47),
                        y.lim = c(0.5, 1))
 
-### Estimando el modelo en el placebo1 
+### Estimando el modelo en el placebo2 
 placebo2_reg = rdrobust(general$estudio_ult_mes, general$puntaje_sisben_3, c = placebo_cutoff2, 
                         kernel = "uniform", vce = "hc0", p = 1, 
                         h = bandwidth_placebo2); summary(placebo2_reg) # El efecto no es significativo
